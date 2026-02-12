@@ -2,358 +2,213 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>PERSIAN WATCH — OSINT Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENTINEL — Morning Briefing 2026-02-12</title>
 <style>
 :root {
-  --bg: #0a0e17;
-  --card: #111827;
-  --card-border: #1e293b;
-  --text: #e2e8f0;
-  --text-dim: #94a3b8;
-  --accent: #60a5fa;
-  --green: #22c55e;
-  --yellow: #eab308;
-  --amber: #f59e0b;
-  --red: #ef4444;
+  --bg: #0a0e14; --surface: #12171f; --border: #1e2a3a;
+  --text: #c5cdd8; --text-dim: #6b7d95; --accent: #4fc3f7;
+  --green: #4caf50; --yellow: #fdd835; --amber: #ff9800; --red: #ef5350;
 }
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-body { background:var(--bg); color:var(--text); font-family:-apple-system,'SF Pro Text',system-ui,sans-serif; line-height:1.5; padding:0; font-size:15px; -webkit-text-size-adjust:100%; }
-.container { padding:12px; max-width:100%; }
-
-.header { text-align:center; padding:20px 10px 16px; border-bottom:2px solid var(--red); margin-bottom:16px; }
-.header .classification { display:inline-block; background:var(--red); color:#fff; font-size:9px; font-weight:700; letter-spacing:2px; padding:3px 14px; border-radius:2px; margin-bottom:10px; }
-.header h1 { font-size:20px; font-weight:800; letter-spacing:1px; color:#fff; }
-.header .subtitle { font-size:12px; color:var(--text-dim); letter-spacing:0.5px; }
-.header .timestamp { font-size:10px; color:var(--amber); margin-top:6px; font-family:ui-monospace,monospace; }
-
-.threat-banner { background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(245,158,11,0.1)); border:1px solid var(--amber); border-radius:8px; padding:16px; margin-bottom:16px; text-align:center; }
-.threat-banner .level { font-size:28px; font-weight:900; letter-spacing:2px; color:var(--amber); text-shadow:0 0 20px rgba(245,158,11,0.4); }
-.threat-banner .desc { font-size:12px; color:var(--text-dim); margin-top:6px; }
-
-.card { background:var(--card); border:1px solid var(--card-border); border-radius:8px; padding:16px; margin-bottom:12px; }
-.card h2 { font-size:15px; color:var(--accent); margin-bottom:10px; border-bottom:1px solid var(--card-border); padding-bottom:8px; }
-.card p { font-size:13px; margin-bottom:8px; }
-
-.key-finding { background:rgba(245,158,11,0.08); border-left:3px solid var(--amber); padding:8px 12px; margin:8px 0; border-radius:0 4px 4px 0; font-size:12px; line-height:1.5; }
-.key-finding strong { color:#fff; }
-
-.vector { background:var(--card); border:1px solid var(--card-border); border-radius:8px; margin-bottom:12px; overflow:hidden; }
-.vector-header { padding:14px 16px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; }
-.vector-header:active { background:rgba(255,255,255,0.03); }
-.vector-header h3 { font-size:14px; font-weight:700; flex:1; }
-.vid { font-size:10px; color:var(--text-dim); font-family:ui-monospace,monospace; background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:3px; margin-right:6px; }
-.conf { font-size:10px; font-weight:600; padding:2px 8px; border-radius:10px; white-space:nowrap; }
-.conf.high,.conf.elevated { background:rgba(239,68,68,0.2); color:#ff6b6b; }
-.conf.medium { background:rgba(245,158,11,0.15); color:var(--amber); }
-.arrow { font-size:16px; color:var(--text-dim); transition:transform 0.3s; margin-left:8px; }
-.vector.open .arrow { transform:rotate(180deg); }
-.vector-body { padding:0 16px 16px; display:none; }
-.vector.open .vector-body { display:block; }
-
-.source { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:6px; padding:10px 12px; margin:6px 0; }
-.source .handle { color:var(--accent); font-weight:600; font-size:12px; }
-.source .time { color:var(--text-dim); font-size:10px; font-family:ui-monospace,monospace; }
-.source .content { color:var(--text); font-size:12px; margin-top:4px; line-height:1.5; }
-.source a { color:var(--accent); font-size:10px; text-decoration:none; display:block; margin-top:4px; }
-
-.tag { display:inline-block; font-size:10px; font-weight:600; padding:2px 6px; border-radius:3px; margin:2px; }
-.tag.red { background:rgba(239,68,68,0.15); color:var(--red); }
-.tag.amber { background:rgba(245,158,11,0.15); color:var(--amber); }
-.tag.blue { background:rgba(96,165,250,0.15); color:var(--accent); }
-
-.analysis { font-size:12px; line-height:1.6; margin-top:10px; }
-.analysis strong { color:#fff; }
-.analysis em { color:var(--amber); font-style:normal; }
-
-/* Mobile-optimized table */
-.opts-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:8px -4px; }
-.opts-table { border-collapse:collapse; font-size:11px; min-width:500px; }
-.opts-table th { background:rgba(255,255,255,0.05); color:var(--accent); padding:6px; text-align:left; font-size:10px; white-space:nowrap; position:sticky; top:0; }
-.opts-table td { padding:5px 6px; border-bottom:1px solid rgba(255,255,255,0.03); white-space:nowrap; }
-.highlight-row { background:rgba(245,158,11,0.08) !important; }
-
-/* Mobile matrix */
-.matrix-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:8px -4px; }
-.matrix { border-collapse:collapse; font-size:10px; min-width:480px; }
-.matrix th,.matrix td { padding:6px; border:1px solid var(--card-border); text-align:center; }
-.matrix th { background:rgba(255,255,255,0.05); color:var(--accent); font-size:9px; white-space:nowrap; }
-.matrix td.hot { background:rgba(239,68,68,0.1); color:var(--red); }
-.matrix td.warm { background:rgba(245,158,11,0.1); color:var(--amber); }
-.matrix td.cool { background:rgba(34,197,94,0.05); color:var(--text-dim); }
-.matrix td.self { background:rgba(255,255,255,0.03); color:var(--text-dim); }
-
-.nhi-box { background:linear-gradient(135deg,rgba(96,165,250,0.05),rgba(139,92,246,0.05)); border:1px solid rgba(96,165,250,0.3); border-radius:8px; padding:14px; margin:10px 0; }
-.nhi-box h4 { color:var(--accent); font-size:13px; margin-bottom:10px; }
-.nhi-box .observation { background:rgba(0,0,0,0.2); border-left:3px solid var(--accent); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:12px; line-height:1.5; }
-.nhi-box .anomaly { background:rgba(239,68,68,0.05); border-left:3px solid var(--red); padding:8px 12px; margin:6px 0; border-radius:0 4px 4px 0; font-size:12px; line-height:1.5; }
-
-ul.findings { list-style:none; padding:0; }
-ul.findings li { padding:4px 0 4px 16px; position:relative; font-size:12px; }
-ul.findings li::before { content:'▸'; position:absolute; left:0; color:var(--amber); }
-
-.footer { text-align:center; padding:16px 8px; margin-top:20px; border-top:1px solid var(--card-border); color:var(--text-dim); font-size:10px; line-height:1.6; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'SF Mono','Fira Code','Consolas',monospace; font-size:14px; line-height:1.6; padding:0; }
+.container { max-width:900px; margin:0 auto; padding:16px; }
+header { border-bottom:2px solid var(--accent); padding-bottom:16px; margin-bottom:24px; text-align:center; }
+header h1 { color:var(--accent); font-size:1.4em; letter-spacing:6px; text-transform:uppercase; margin-bottom:4px; }
+header .subtitle { color:var(--text-dim); font-size:0.75em; letter-spacing:2px; }
+header .timestamp { color:var(--text-dim); font-size:0.7em; margin-top:8px; }
+.section { background:var(--surface); border:1px solid var(--border); border-radius:6px; margin-bottom:16px; overflow:hidden; }
+.section-header { display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--border); }
+.section-header h2 { font-size:0.95em; letter-spacing:2px; text-transform:uppercase; color:#fff; }
+.indicator { display:inline-block; padding:2px 8px; border-radius:3px; font-size:0.65em; font-weight:700; letter-spacing:1px; }
+.ind-green { background:var(--green); color:#000; }
+.ind-yellow { background:var(--yellow); color:#000; }
+.ind-amber { background:var(--amber); color:#000; }
+.ind-red { background:var(--red); color:#fff; }
+.section-body { padding:14px 16px; font-size:0.85em; }
+.section-body p { margin-bottom:8px; }
+.section-body ul { padding-left:18px; margin-bottom:8px; }
+.section-body li { margin-bottom:4px; }
+.section-body strong { color:#fff; }
+.bluf-text { color:var(--accent); font-size:0.95em; line-height:1.7; }
+.posture-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:10px; margin-top:10px; }
+.posture-item { background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:10px; text-align:center; }
+.posture-item .label { font-size:0.7em; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+.posture-item .value { font-size:1.1em; font-weight:700; margin-top:4px; }
+.confidence { color:var(--text-dim); font-style:italic; font-size:0.8em; }
+footer { text-align:center; padding:20px 0; color:var(--text-dim); font-size:0.65em; letter-spacing:1px; border-top:1px solid var(--border); margin-top:24px; }
+@media(max-width:600px){
+  .container{padding:10px;}
+  header h1{font-size:1.1em;letter-spacing:3px;}
+  .section-body{font-size:0.82em;}
+  .posture-grid{grid-template-columns:1fr 1fr;}
+}
 </style>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.vector-header').forEach(h => {
-    h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
-  });
-  document.querySelectorAll('.vector').forEach(v => v.classList.add('open'));
-});
-</script>
 </head>
 <body>
 <div class="container">
 
-<div class="header">
-  <div class="classification">OPEN SOURCE INTELLIGENCE (OSINT)</div>
-  <h1>OPERATION PERSIAN WATCH</h1>
-  <div class="subtitle">MULTI-VECTOR OSINT INTELLIGENCE REPORT</div>
-  <div class="timestamp">2026-02-11 19:05 EST | 12-48H WINDOW | HERMES/OPUS-4.6</div>
+<header>
+<h1>Sentinel Intelligence Product</h1>
+<div class="subtitle">Morning Briefing — Multi-Domain Situational Awareness</div>
+<div class="timestamp">Generated: 2026-02-12 07:38 EST &nbsp;|&nbsp; Period: 24-72h lookback</div>
+</header>
+
+<!-- BLUF -->
+<div class="section">
+<div class="section-header">
+<span class="indicator ind-amber">AMBER</span>
+<h2>BLUF — Bottom Line Up Front</h2>
+</div>
+<div class="section-body">
+<p class="bluf-text">Iran diplomatic track fragile — Netanyahu met Trump pushing military option while Oman talks stall on scope impasse. USS Abraham Lincoln CSG in Arabian Sea; second carrier under consideration. New START expired; AFGSC declares MIRV and full B-52 nuclear readiness. Markets rotating hard into energy (+20% YTD) ahead of Friday CPI. Poland grid cyberattack (DynoWiper) triggers CISA/NCSC infrastructure alerts. Domestic: measles outbreak spreading; House rebukes Canada tariffs in bipartisan vote.</p>
+</div>
 </div>
 
-<div class="threat-banner">
-  <div class="level">▲ AMBER — ELEVATED</div>
-  <div class="desc">Multiple vectors indicate heightened military posture. No confirmed kinetic action. Signal-to-noise degraded by speculation.</div>
+<!-- STRATEGIC POSTURE -->
+<div class="section">
+<div class="section-header">
+<span class="indicator ind-amber">AMBER</span>
+<h2>Strategic Posture</h2>
+</div>
+<div class="section-body">
+<p>Overall threat environment is <strong>elevated but not critical</strong>. Three concurrent stress vectors: (1) US-Iran brinksmanship with active military buildup and collapsing diplomatic consensus, (2) post-New START nuclear order fragmentation with multiple states expanding capabilities, (3) critical infrastructure cyber threat demonstrated against NATO energy grids. No imminent kinetic threat to CONUS. Primary escalation risk is miscalculation in the Arabian Sea or Israeli spoiler action against Iran talks.</p>
+<div class="posture-grid">
+<div class="posture-item"><div class="label">Persian Gulf</div><div class="value" style="color:var(--red)">HIGH</div></div>
+<div class="posture-item"><div class="label">Strategic Nuclear</div><div class="value" style="color:var(--yellow)">YELLOW</div></div>
+<div class="posture-item"><div class="label">Cyber / Infra</div><div class="value" style="color:var(--yellow)">YELLOW</div></div>
+<div class="posture-item"><div class="label">Markets</div><div class="value" style="color:var(--yellow)">CAUTIOUS</div></div>
+<div class="posture-item"><div class="label">Biological</div><div class="value" style="color:var(--yellow)">YELLOW</div></div>
+<div class="posture-item"><div class="label">CONUS Threat</div><div class="value" style="color:var(--green)">LOW</div></div>
+</div>
+</div>
 </div>
 
-<div class="card">
-  <h2>⚡ EXECUTIVE SUMMARY</h2>
-  <p style="font-size:13px">Six OSINT vectors swept via Grok-4 x_search against live X data, cross-correlated with 73,338-contract options flow (15 tickers). A <strong>convergent pattern of elevated military readiness signals</strong> — individually routine, temporally clustered.</p>
-  <div class="key-finding"><strong>1:</strong> SKYMASTER nuclear readiness codes transmitted — B-2 activity concurrent. @neetintel confirms possible SKYMASTER event.</div>
-  <div class="key-finding"><strong>2:</strong> E-4B Nightwatch departed JBA heading west. E-6B Mercury out of Travis AFB using tactical hex (identity obfuscation).</div>
-  <div class="key-finding"><strong>3:</strong> FAA NOTAM: El Paso/S. NM airspace closed 10 days — "national defense airspace," deadly force authorized.</div>
-  <div class="key-finding"><strong>4:</strong> UVB-76 Russian doomsday station surged 22+ messages today vs 25-30/month baseline (~20x spike).</div>
-  <div class="key-finding"><strong>5:</strong> XLE inverted IV skew (-0.247) — calls priced above puts. War premium signature in energy options.</div>
-  <div class="key-finding"><strong>6:</strong> SPY deep OTM put IV at 0.393, 1,511 contracts. Polymarket: 9% odds of strike before Feb 20.</div>
+<!-- PERSIAN WATCH -->
+<div class="section">
+<div class="section-header">
+<span class="indicator ind-red">RED</span>
+<h2>🇮🇷 Persian Watch</h2>
+</div>
+<div class="section-body">
+<p><strong>Threat Level: HIGH</strong></p>
+<ul>
+<li><strong>Diplomacy:</strong> Indirect Oman talks (Feb 7) produced no breakthrough. Fundamental impasse: Iran wants nuclear-only; US demands nuclear + missiles + proxies. Larijani accuses Israel of deliberate sabotage. Second round timing undecided.</li>
+<li><strong>Military:</strong> USS Abraham Lincoln CSG deployed to Arabian Sea with ~5,700 troops. US drone intercepted approaching Iranian drone Feb 3. Second carrier deployment under consideration — key escalation indicator. Maritime advisory issued to US-flagged ships.</li>
+<li><strong>Netanyahu visit (Feb 12):</strong> Presented "principles" to Trump pushing military action. Trump signaling preference for deal but threatening "something very tough."</li>
+<li><strong>Internal:</strong> Iran under extreme domestic pressure — rial collapse, 5,000+ protesters killed (UN estimate), internet blackouts, reformist arrests. Revolution anniversary rallies Feb 11.</li>
+<li><strong>Proxies:</strong> Hezbollah restrained. Houthis in possible operational pause. Network degraded but activatable.</li>
+</ul>
+<p><strong>72h Outlook:</strong> Tense holding pattern. Watch for second carrier decision, Oman round 2 scheduling, and Israeli provocations. Strike probability this window: LOW-MODERATE (15-20%).</p>
+<p class="confidence">Confidence: HIGH — Multiple corroborating OSINT streams</p>
+</div>
 </div>
 
-<!-- VEC-01 -->
-<div class="vector">
-  <div class="vector-header">
-    <h3><span class="vid">01</span> Iran Strike Intel</h3>
-    <span class="conf medium">MEDIUM</span><span class="arrow">▾</span>
-  </div>
-  <div class="vector-body">
-    <p class="analysis">Active speculation on X about imminent US strikes. <strong>No tier-1 sources confirm kinetic action.</strong> Volume and temporal clustering notable.</p>
-    <div class="source">
-      <div style="display:flex;justify-content:space-between"><span class="handle">@Alexkennedy310</span><span class="time">23:49 GMT</span></div>
-      <div class="content">"Claim by British news agency: Israel got permission to attack Iran from Trump. Israel will attack, US supports from sea."</div>
-      <a href="https://x.com/i/status/2021733462969885087">x.com/…/2021733462969885087</a>
-    </div>
-    <div class="source">
-      <div style="display:flex;justify-content:space-between"><span class="handle">@nycliusa</span><span class="time">23:28 GMT</span></div>
-      <div class="content">"The US is going to attack and kill Iranian President tonight. Surprise attack is ready."</div>
-      <a href="https://x.com/i/status/2021728064544100670">x.com/…/2021728064544100670</a>
-    </div>
-    <div class="source">
-      <div style="display:flex;justify-content:space-between"><span class="handle">@jhon_odey</span><span class="time">22:48 GMT</span></div>
-      <div class="content">"Iran has blocked entrances to nuclear facilities with dirt. Iran expects a bombing."</div>
-      <a href="https://x.com/i/status/2021717955650662676">x.com/…/2021717955650662676</a>
-    </div>
-    <div class="source">
-      <div style="display:flex;justify-content:space-between"><span class="handle">@doj1t47318</span><span class="time">20:17 GMT</span></div>
-      <div class="content">Polymarket: US strike before Feb 20 at 9% — "potential 10x payout."</div>
-      <a href="https://x.com/i/status/2021680034415628391">x.com/…/2021680034415628391</a>
-    </div>
-    <p class="analysis" style="margin-top:10px"><strong>NHI:</strong> Source quality LOW. Low engagement. Polymarket 9% creates asymmetric opportunity if hard signals (V2-V4) are underweighted.</p>
-  </div>
+<!-- DOOMSDAY WATCH -->
+<div class="section">
+<div class="section-header">
+<span class="indicator ind-yellow">YELLOW</span>
+<h2>☢️ Doomsday Watch — NC3 / Strategic Posture</h2>
+</div>
+<div class="section-body">
+<p><strong>Posture: ELEVATED BASELINE — No imminent crisis</strong></p>
+<ul>
+<li><strong>New START expired:</strong> AFGSC declared readiness to MIRV Minuteman III and restore nuclear capability to all 76 B-52H bombers. Policy shift, not operational surge.</li>
+<li><strong>Iran ICBM claim:</strong> Alleged 10,000km test Jan 19 toward Siberia with Russian approval. NOT independently confirmed. DIA projects 60 Iranian ICBMs by 2035.</li>
+<li><strong>Nightwatch fleet doubling</strong> announced (~3 weeks ago). E-4B made rare LAX landing Jan 10. Long-term modernization signal.</li>
+<li><strong>DEFCON tracker:</strong> Above-normal readiness reported. No official DEFCON change announced.</li>
+<li><strong>Columbia-class:</strong> Construction schedule improving. Deterrent continuity positive.</li>
+<li><strong>Proliferation:</strong> South Korea and Saudi Arabia moving toward fissile material production with US support.</li>
+<li><strong>Space:</strong> Russian Luch SIGINT satellite fragmented Jan 30 in graveyard orbit — debris concern near GEO, not ASAT.</li>
+</ul>
+<p><strong>Mitigating:</strong> No bomber generation, no SSBN flush, no unusual TACAMO activity. All anomalies are policy/declaratory.</p>
+<p class="confidence">Confidence: MEDIUM-HIGH — OSINT limitations on classified posture</p>
+</div>
 </div>
 
-<!-- VEC-02 -->
-<div class="vector">
-  <div class="vector-header">
-    <h3><span class="vid">02</span> E-4B / E-6B Activity</h3>
-    <span class="conf elevated">HIGH</span><span class="arrow">▾</span>
-  </div>
-  <div class="vector-body">
-    <p class="analysis">Both US airborne nuclear command platforms tracked active. <strong>Verifiable ADS-B intercepts</strong> — highest-confidence data.</p>
-    <div class="source">
-      <div style="display:flex;justify-content:space-between"><span class="handle">@sipjack1776</span><span class="time">14:12 GMT</span></div>
-      <div class="content"><strong>E-4B Nightwatch</strong> — #ADFEB5 / 74-0787 — West out of Joint Base Andrews. ADS-B verified.</div>
-      <a href="https://x.com/i/status/2021588227333804152">x.com/…/2021588227333804152</a>
-    </div>
-    <div class="source">
-      <div style="display:flex;justify-content:space-between"><span class="handle">@sipjack1776</span><span class="time">Feb 10, 16:20</span></div>
-      <div class="content"><strong>E-6B Mercury</strong> — Tactical hex #AECE5E out of Travis AFB. Identity obfuscation = non-routine.</div>
-      <a href="https://x.com/i/status/2021257893077549542">x.com/…/2021257893077549542</a>
-    </div>
-    <p class="analysis"><span class="tag red">SIGNIFICANT</span> Simultaneous E-4B + E-6B consistent with continuity-of-government ops. Tactical hex on E-6B is departure from routine. Correlated with EAM (V4) — strongest signal cluster.</p>
-  </div>
+<!-- THREAT WATCH -->
+<div class="section">
+<div class="section-header">
+<span class="indicator ind-yellow">YELLOW</span>
+<h2>🛡️ Threat Watch — Multi-Vector</h2>
+</div>
+<div class="section-body">
+<ul>
+<li><strong>Solar/Space:</strong> <span style="color:var(--green)">GREEN</span> — Quiet conditions. No storms or radio blackouts.</li>
+<li><strong>Seismic:</strong> <span style="color:var(--green)">GREEN</span> — M4.6 Alaska, M2.9 South Carolina. No M6+ events.</li>
+<li><strong>Biological:</strong> <span style="color:var(--yellow)">YELLOW</span> — Nipah outbreak in India (2 HCW cases, 40-75% CFR). Global measles resurgence: 552K+ suspected cases across 179 countries. Canada lost measles-free status.</li>
+<li><strong>Nuclear:</strong> <span style="color:var(--yellow)">YELLOW</span> — Proliferation concerns elevated (see Doomsday Watch). No radiological incidents.</li>
+<li><strong>Infrastructure/Cyber:</strong> <span style="color:var(--yellow)">YELLOW</span> — <strong>Poland grid attack:</strong> DynoWiper malware hit 30+ wind/solar farms via FortiGate VPN. CISA and UK NCSC issued active warnings to all CI operators.</li>
+</ul>
+<p><strong>No immediate threats to CONUS.</strong> Three vectors at elevated concern.</p>
+</div>
 </div>
 
-<!-- VEC-03 -->
-<div class="vector">
-  <div class="vector-header">
-    <h3><span class="vid">03</span> NOTAM Analysis</h3>
-    <span class="conf medium">MEDIUM</span><span class="arrow">▾</span>
-  </div>
-  <div class="vector-body">
-    <p class="analysis"><strong>No Iran/Gulf NOTAMs found.</strong> Extraordinary domestic NOTAM emerged instead.</p>
-    <div class="source">
-      <div class="handle">FAA — Feb 11</div>
-      <div class="content"><strong>El Paso / S. New Mexico:</strong> 10-day closure, surface–17,999ft. "National defense airspace." Deadly force auth. No medevac exemptions. Similar NOTAMs at NAS Corpus Christi + Gulf Coast.</div>
-    </div>
-    <ul class="findings" style="margin-top:8px">
-      <li>Counter-UAS vs cartel drones (possibly Iranian Shahed variants)</li>
-      <li>Multiple zones form contiguous restricted corridor</li>
-      <li>NYT confirmed, citing "unspecified security reasons"</li>
-    </ul>
-    <p class="analysis"><span class="tag amber">ANOMALOUS</span> Absence of Iran NOTAMs is itself data — pre-strike closures come hours before, not days. Domestic NOTAM with deadly force auth over US soil is extremely rare. If counter-Iranian-drone ops, it's a domestic manifestation of the Iran conflict.</p>
-  </div>
+<!-- MARKETS -->
+<div class="section">
+<div class="section-header">
+<span class="indicator ind-yellow">YELLOW</span>
+<h2>📊 Markets & Energy Paradox</h2>
+</div>
+<div class="section-body">
+<p><strong>Indices (Feb 11 close):</strong> S&P 6,941 (flat) | Dow 50,121 (-0.13%) | NASDAQ 23,066 (-0.16%) | Futures +0.3% premarket</p>
+<p><strong>Energy Paradox Update:</strong> XLE +2.61% Wed, <strong>+20% YTD</strong> — sector leader. WTI crude at $64.42 (flat). Divergence morphing into structural re-rating: Big Oil cash flows + Venezuela sanctions + sector rotation out of tech. Risk: crude below $64 makes divergence unsustainable.</p>
+<ul>
+<li><strong>VIX:</strong> 17.41 — subdued, possible complacency ahead of CPI</li>
+<li><strong>Gold:</strong> $5,084 — monster run, holding above $5K</li>
+<li><strong>NatGas:</strong> $3.25 (+2.98%) — winter demand bounce</li>
+<li><strong>DXY:</strong> Strengthening on hot jobs data, headwind for commodities</li>
+<li><strong>Options flow:</strong> RSP calls +44% (breadth expansion bet), NNDM calls +103%</li>
+</ul>
+<p><strong>🚨 Key catalyst: January CPI — Friday Feb 13.</strong> Hot print extends Fed pause and pressures commodities.</p>
+</div>
 </div>
 
-<!-- VEC-04 -->
-<div class="vector">
-  <div class="vector-header">
-    <h3><span class="vid">04</span> EAM / SKYKING</h3>
-    <span class="conf elevated">HIGH</span><span class="arrow">▾</span>
-  </div>
-  <div class="vector-body">
-    <p class="analysis">Most structurally significant vector. Multiple sources confirm elevated EAM/SKYMASTER activity + Russian anomalies.</p>
-    <div class="source">
-      <div class="handle">HF Monitors — Feb 11</div>
-      <div class="content"><strong>SKYMASTER event:</strong> High-priority nuclear readiness codes. "Just below EMERGENCY WAR ORDER." Two B-2s active on radio.</div>
-    </div>
-    <div class="source">
-      <div class="handle">E-6B TACAMO — Feb 11</div>
-      <div class="content">E-6B "OFF Ground" near Midwest City, OK — airborne HF relay for nuclear C3.</div>
-    </div>
-    <div class="source">
-      <div class="handle">UVB-76 — Feb 11</div>
-      <div class="content"><strong>Russian doomsday station surge:</strong> 22+ msgs today vs 25-30/month baseline (~22x spike). Codes: "USSR Pigeons," "Kolomensk," "blood."</div>
-    </div>
-    <div class="source">
-      <div class="handle">AWACS/ISR — Feb 11</div>
-      <div class="content">E-3G orbiting NM/TX at 32K ft. E-3 near Japan. GPS spoofing over Lima + Europe.</div>
-    </div>
-    <p class="analysis"><span class="tag red">CRITICAL</span> SKYMASTER + B-2 + E-4B/E-6B + TACAMO + UVB-76 = nuclear command constellation. Either Global Thunder exercise or genuine pre-strike C3 dispersal. UVB-76 responding suggests Moscow reads this as non-routine. "Blood" code has no public mapping — novel codes indicate operational traffic.</p>
-  </div>
+<!-- MACRO -->
+<div class="section">
+<div class="section-header">
+<span class="indicator ind-amber">AMBER</span>
+<h2>🌐 Macro Watch</h2>
+</div>
+<div class="section-body">
+<ul>
+<li><strong>Fed:</strong> Rate at 3.50-3.75%, held Jan. Jobs beat (130K vs 55K est). Powell: "well positioned." June cut expected under incoming chair Kevin Warsh.</li>
+<li><strong>Inflation:</strong> CPI 2.9% headline, 2.7% core. Fed's 2% target elusive. Jan CPI release delayed to Feb 14 by gov shutdown.</li>
+<li><strong>Yields:</strong> 2Y 3.51% | 10Y 4.17% | 30Y 4.81% | Curve normal (+66bps)</li>
+<li><strong>Tariffs — CRITICAL:</strong> Weighted avg 13.5% — highest since 1946. Avg household +$1,300/yr. GDP drag -0.5%. House voted against Canada tariffs. Trump considering quitting USMCA. Supreme Court to rule on IEEPA authority.</li>
+<li><strong>AI Disruption:</strong> Anthropic tool launch triggered enterprise software selloff. OpenAI eyeing $800B+ valuation. Shift from theoretical to actual enterprise displacement underway.</li>
+<li><strong>BOJ:</strong> Up to 3 hikes possible in 2026; next as early as March.</li>
+</ul>
+<p><strong>Ukraine:</strong> ~1.2M Russian casualties. Combined could reach 2M by spring. Ukraine energy at 60% capacity. Russia's economy: 0.6% growth.</p>
+</div>
 </div>
 
-<!-- VEC-05 -->
-<div class="vector">
-  <div class="vector-header">
-    <h3><span class="vid">05</span> @neetintel Feed</h3>
-    <span class="conf elevated">HIGH</span><span class="arrow">▾</span>
-  </div>
-  <div class="vector-body">
-    <p class="analysis">Specialized HFGCS/EAM analyst. Calibrated, technical — not speculation.</p>
-    <div class="source">
-      <div style="display:flex;justify-content:space-between"><span class="handle">@neetintel</span><span class="time">22:43 GMT</span></div>
-      <div class="content">"It does look like a <strong>SKYMASTER event occurred.</strong>"</div>
-      <a href="https://x.com/i/status/2021716757304504453">x.com/…/2021716757304504453</a>
-    </div>
-    <div class="source">
-      <div style="display:flex;justify-content:space-between"><span class="handle">@neetintel</span><span class="time">20:29 GMT</span></div>
-      <div class="content">"<strong>BREAKING: OSINT accounts cannot tell if a major US nuclear exercise is ongoing or not.</strong>"</div>
-      <a href="https://x.com/i/status/2021683086350528579">x.com/…/2021683086350528579</a>
-    </div>
-    <div class="source">
-      <div style="display:flex;justify-content:space-between"><span class="handle">@neetintel</span><span class="time">18:21 GMT</span></div>
-      <div class="content">"Most are hyperfocused on Iran that they could <strong>miss a tier 1 nuclear exercise.</strong> They've missed them before."</div>
-      <a href="https://x.com/i/status/2021650753249763673">x.com/…/2021650753249763673</a>
-    </div>
-    <p class="analysis"><span class="tag amber">KEY FRAME</span> Dual-operation hypothesis: nuclear exercise may mask Iran ops. Classic deception — hiding real operations inside scheduled exercises. "You're watching the magician's right hand."</p>
-  </div>
+<!-- WORLD NEWS -->
+<div class="section">
+<div class="section-header">
+<span class="indicator ind-yellow">YELLOW</span>
+<h2>🌍 World News</h2>
+</div>
+<div class="section-body">
+<ul>
+<li><strong>US House rebukes Canada tariffs</strong> — 6 GOP lawmakers broke ranks in bipartisan vote. Growing domestic pushback on trade policy.</li>
+<li><strong>Russia blocks WhatsApp</strong> — 90M users pushed toward state-backed app. Digital isolation accelerates.</li>
+<li><strong>Sweden deploys Gripen jets</strong> for NATO Arctic Sentry near Greenland amid renewed US interest and Russian/Chinese Arctic activity.</li>
+<li><strong>Xi acknowledges military purge</strong> — Removed Zhang Youxia, his closest military ally. Signals deep PLA instability or consolidation.</li>
+<li><strong>US exits Syria al-Tanf base</strong> — Syrian army occupies. Ends key US footprint blocking Iran-Iraq-Syria corridor.</li>
+<li><strong>Bangladesh holds first post-uprising election</strong> after 2024 protests ousted PM Hasina.</li>
+<li><strong>Kim Jong Un names teen daughter as heir</strong> — First clear succession signal from Pyongyang in a generation.</li>
+<li><strong>Cyclone devastates Madagascar</strong> — 31+ dead, 90% of roofs destroyed in port city. Humanitarian crisis developing.</li>
+<li><strong>Imran Khan losing vision</strong> in prison — Raises pressure on Pakistan's military government.</li>
+</ul>
+</div>
 </div>
 
-<!-- VEC-06 -->
-<div class="vector">
-  <div class="vector-header">
-    <h3><span class="vid">06</span> Energy & Options Flow</h3>
-    <span class="conf elevated">HIGH</span><span class="arrow">▾</span>
-  </div>
-  <div class="vector-body">
-    <p class="analysis">Options flow reveals positioning anomalies difficult to explain without asymmetric information.</p>
-    <p class="analysis" style="margin:8px 0"><strong>THE PARADOX:</strong> Oil stockpiles +8.5M bbl (bearish) yet prices elevated on Iran fear premium. XLE +2.61% today, +22.97% YTD leading all sectors. <em>Supply says down, positioning says up.</em></p>
-
-    <div class="opts-scroll">
-      <table class="opts-table">
-        <tr><th>Ticker</th><th>Price</th><th>Call IV</th><th>Put IV</th><th>Skew</th><th>OTM Put IV</th><th>Signal</th></tr>
-        <tr class="highlight-row"><td><strong>XLE</strong></td><td>$55</td><td>.577</td><td>.330</td><td style="color:var(--red)"><strong>-.247</strong></td><td>.341</td><td><span class="tag red">INVERTED</span></td></tr>
-        <tr class="highlight-row"><td><strong>SPY</strong></td><td>$693</td><td>.171</td><td>.308</td><td>.137</td><td style="color:var(--red)"><strong>.393</strong></td><td><span class="tag red">TAIL HEDGE</span></td></tr>
-        <tr><td><strong>GLD</strong></td><td>$467</td><td>.344</td><td>.365</td><td>.021</td><td>.369</td><td><span class="tag amber">SAFE HAVEN</span></td></tr>
-        <tr class="highlight-row"><td><strong>LMT</strong></td><td>$630</td><td>.286</td><td>.398</td><td>.111</td><td>.385</td><td><span class="tag amber">DEF BID</span></td></tr>
-        <tr><td><strong>XOM</strong></td><td>$156</td><td>.253</td><td>.370</td><td>.117</td><td>.401</td><td><span class="tag amber">OIL HEDGE</span></td></tr>
-      </table>
-    </div>
-
-    <ul class="findings" style="margin-top:8px">
-      <li><strong>XLE -0.247 skew:</strong> Calls massively over puts. Market pricing upside explosions in energy. War premium signature.</li>
-      <li><strong>SPY OTM puts at 1.0+ IV:</strong> Catastrophe insurance. Someone paying extreme premiums for 10-30% crash protection.</li>
-      <li><strong>GLD flat skew:</strong> Gold already priced in geopolitical risk at $467.</li>
-    </ul>
-
-    <div class="source">
-      <div class="handle">@crudeiq — 23:42 GMT</div>
-      <div class="content">"Stockpiles +8.5M bbl should lower prices — Iran fear premium keeping them elevated."</div>
-    </div>
-    <div class="source">
-      <div class="handle">@FibAlgoai — 14:35 GMT</div>
-      <div class="content">"Trump-Netanyahu summit escalating. Volatility in $PLTR, $LMT, $NOC, oil."</div>
-    </div>
-  </div>
-</div>
-
-<!-- CROSS-CORRELATION -->
-<div class="card">
-  <h2>🔗 CROSS-CORRELATION</h2>
-  <div class="matrix-scroll">
-    <table class="matrix">
-      <tr><th></th><th>V1</th><th>V2</th><th>V3</th><th>V4</th><th>V5</th><th>V6</th></tr>
-      <tr><th>V1: Strike</th><td class="self">—</td><td class="warm">MOD</td><td class="cool">WEAK</td><td class="warm">MOD</td><td class="warm">MOD</td><td class="warm">MOD</td></tr>
-      <tr><th>V2: E-4B/6B</th><td class="warm">MOD</td><td class="self">—</td><td class="warm">MOD</td><td class="hot">STRONG</td><td class="hot">STRONG</td><td class="warm">MOD</td></tr>
-      <tr><th>V3: NOTAM</th><td class="cool">WEAK</td><td class="warm">MOD</td><td class="self">—</td><td class="warm">MOD</td><td class="cool">WEAK</td><td class="cool">WEAK</td></tr>
-      <tr><th>V4: EAM</th><td class="warm">MOD</td><td class="hot">STRONG</td><td class="warm">MOD</td><td class="self">—</td><td class="hot">STRONG</td><td class="hot">STRONG</td></tr>
-      <tr><th>V5: neet</th><td class="warm">MOD</td><td class="hot">STRONG</td><td class="cool">WEAK</td><td class="hot">STRONG</td><td class="self">—</td><td class="warm">MOD</td></tr>
-      <tr><th>V6: Energy</th><td class="warm">MOD</td><td class="warm">MOD</td><td class="cool">WEAK</td><td class="hot">STRONG</td><td class="warm">MOD</td><td class="self">—</td></tr>
-    </table>
-  </div>
-  <p class="analysis" style="margin-top:10px"><strong>Strongest cluster:</strong> V2+V4+V5 (E-4B/E-6B + EAM + @neetintel) — same nuclear C3 constellation from different angles. V6 correlates with V4 — markets pricing what HF monitors detect.</p>
-</div>
-
-<!-- NHI ASSESSMENT -->
-<div class="card">
-  <h2>🧠 NHI ASSESSMENT — OPUS 4.6</h2>
-
-  <div class="nhi-box">
-    <h4>PATTERN RECOGNITION</h4>
-    <div class="observation"><strong>1: Nuclear C3 Constellation is Real.</strong> E-4B + E-6B + SKYMASTER + B-2 + AWACS = verifiable activation pattern. Exercise vs operational is the unknown.</div>
-    <div class="observation"><strong>2: Dual-Operation Hypothesis.</strong> Nuclear exercise masking Iran ops — classic deception (cf. Able Archer 83). OSINT Iran-fixation creates natural blind spot.</div>
-    <div class="anomaly"><strong>A1: XLE Inverted Skew.</strong> -0.247 is extraordinarily rare. Someone with size buying upside calls. Market sees unpriced upside risk in energy. Suggestive, not conclusive.</div>
-    <div class="anomaly"><strong>A2: UVB-76 Surge.</strong> 22x daily baseline. If reactive to US activity — most alarming signal. "Blood" code has no public mapping. Novel codes = operational, not exercise.</div>
-    <div class="anomaly"><strong>A3: SPY 1.0+ IV Puts.</strong> Catastrophe insurance at $765-$895 strikes. Institutional desks with advance intelligence of market-moving events.</div>
-    <div class="observation"><strong>3: Polymarket Mispricing?</strong> 9% vs aggressive options hedging. Different populations, different information/risk tolerances.</div>
-    <div class="observation"><strong>4: NOTAM Domestic Angle.</strong> If Shahed-variant drones on US soil via cartels — direct Iranian asymmetric capability. Potential casus belli.</div>
-  </div>
-
-  <div class="nhi-box" style="border-color:var(--red);">
-    <h4 style="color:var(--red);">⚠️ PREDICTIVE ASSESSMENT</h4>
-    <div class="anomaly">
-      <strong>P(US Strike Iran, 72h):</strong> <span style="font-size:22px;font-weight:900;color:var(--amber);">18-25%</span><br><br>
-      Nuclear C3 most likely exercise. Dual-op hypothesis cannot be excluded. Options show asymmetric positioning but not strike-date-correlated buying. UVB-76 response elevates above baseline.<br><br>
-      <strong>Escalation Watchpoints:</strong>
-      <ul class="findings" style="margin-top:6px">
-        <li>Iran-theater NOTAMs appearing</li>
-        <li>CVN Bush CSG verified in AOR</li>
-        <li>Additional B-2 departures from Whiteman</li>
-        <li>XLE skew deepening / spreading to XOM/CVX</li>
-        <li>VIX >25 + gold breakout >$475</li>
-        <li>Congressional notification leaks</li>
-        <li>@neetintel SKYMASTER upgrade with audio</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="footer">
-  <p>OPERATION PERSIAN WATCH | OSINT | Claude Opus 4.6 (NHI) + Grok-4 (Collection)</p>
-  <p>Sources: X/Twitter via Grok-4 x_search | Options: Alpaca (73,338 contracts, 15 tickers)</p>
-  <p>⚠️ Grok may misattribute post IDs/handles. Verify independently.</p>
-  <p style="margin-top:8px">Hermes 🪽 | 2026-02-11 19:05 EST</p>
-</div>
+<footer>
+SENTINEL INTELLIGENCE PRODUCT &nbsp;|&nbsp; OPEN SOURCE &nbsp;|&nbsp; NO CLASSIFICATION<br>
+Generated 2026-02-12 07:38 EST &nbsp;|&nbsp; Next scheduled update: 2026-02-12 18:00 EST<br>
+Sources: Reuters, Al Jazeera, USNI, TWZ, CNBC, NOAA, USGS, WHO, CISA, DefconLevel.com, ISW/AEI
+</footer>
 
 </div>
 </body>
