@@ -3,348 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SENTINEL — Morning Briefing 2026-02-12</title>
+<title>Sentinel Prime Briefing — 2026-02-13</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0e14;color:#c5c8c6;font-family:'Courier New',monospace;font-size:14px;line-height:1.6;padding:12px;max-width:900px;margin:0 auto}
-a{color:#5f9ea0}
-h1{font-size:1.4em;color:#e6db74;border-bottom:2px solid #e6db74;padding-bottom:8px;margin-bottom:4px;letter-spacing:2px}
-h2{font-size:1.1em;color:#8be9fd;margin:24px 0 8px;padding:6px 0;border-bottom:1px solid #333}
-h3{font-size:1em;color:#bd93f9;margin:12px 0 6px}
-.header{text-align:center;padding:16px 0;border-bottom:2px double #444;margin-bottom:20px}
-.header .label{font-size:.75em;color:#666;letter-spacing:4px}
-.header .ts{font-size:.75em;color:#555;margin-top:4px}
-.badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:.8em;font-weight:bold;margin-left:6px;vertical-align:middle}
-.badge-red{background:#ff5555;color:#000}
-.badge-high{background:#ff5555;color:#000}
-.badge-amber{background:#ffb86c;color:#000}
-.badge-yellow{background:#f1fa8c;color:#000}
-.badge-green{background:#50fa7b;color:#000}
-.bluf{background:#1a1e26;border-left:4px solid #ff5555;padding:12px 16px;margin:16px 0}
-.bluf p{margin:6px 0}
-.section{background:#10141c;border:1px solid #1e2430;border-radius:4px;padding:14px;margin:16px 0}
-.kv{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted #1e2430}
-.kv .k{color:#888}.kv .v{color:#e6db74;text-align:right}
-ul{padding-left:20px;margin:6px 0}
-li{margin:4px 0}
-.highlight{color:#ff5555;font-weight:bold}
-.moderate{color:#f1fa8c}
-.footer{text-align:center;padding:20px 0;color:#444;font-size:.7em;border-top:1px solid #222;margin-top:30px}
-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9em}
-th,td{text-align:left;padding:4px 8px;border-bottom:1px solid #1e2430}
-th{color:#8be9fd}
-@media(max-width:600px){body{font-size:13px;padding:8px}h1{font-size:1.2em}h2{font-size:1em}.section{padding:10px}}
+:root{--bg:#0a0e17;--card:#111827;--border:#1e293b;--text:#e2e8f0;--dim:#64748b;--green:#22c55e;--yellow:#eab308;--amber:#f59e0b;--red:#ef4444;--blue:#3b82f6;--gold:#fbbf24}
+body{background:var(--bg);color:var(--text);font-family:'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;line-height:1.6;padding:12px;max-width:900px;margin:0 auto}
+h1{font-size:1.4em;color:var(--gold);border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:16px}
+h2{font-size:1.1em;color:var(--blue);margin:20px 0 8px;cursor:pointer;user-select:none}
+h2::before{content:'▸ ';font-size:0.8em}
+h2.open::before{content:'▾ '}
+.section{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px}
+.section-body{display:none;margin-top:10px}
+.section-body.show{display:block}
+.bluf{background:#1a1a2e;border-left:4px solid var(--gold);padding:14px;border-radius:0 8px 8px 0;margin-bottom:16px;font-size:1.05em}
+.tier{display:inline-block;padding:4px 12px;border-radius:4px;font-weight:700;font-size:0.85em;margin:2px 4px}
+.tier-green{background:#064e3b;color:var(--green)}
+.tier-yellow{background:#713f12;color:var(--yellow)}
+.tier-amber{background:#78350f;color:var(--amber)}
+.tier-red{background:#7f1d1d;color:var(--red)}
+.delta-up{color:var(--green)}
+.delta-down{color:var(--red)}
+.delta-flat{color:var(--dim)}
+.flag{background:#1e1b4b;border-left:3px solid var(--amber);padding:8px 12px;margin:6px 0;border-radius:0 4px 4px 0;font-size:0.9em}
+.metric{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border)}
+.metric:last-child{border-bottom:none}
+.metric-label{color:var(--dim)}
+.confidence{font-size:0.8em;color:var(--dim);font-style:italic}
+.timestamp{text-align:center;color:var(--dim);font-size:0.8em;margin-top:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}body{font-size:13px;padding:8px}}
+table{width:100%;border-collapse:collapse;font-size:0.9em}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--dim);font-weight:600}
+.disclaimer{color:var(--dim);font-size:0.7em;text-align:center;margin-top:16px;padding:8px;border-top:1px solid var(--border)}
 </style>
 </head>
 <body>
 
-<div class="header">
-<div class="label">SENTINEL INTELLIGENCE PRODUCT</div>
-<h1>MORNING BRIEFING</h1>
-<div class="ts">2026-02-12 0845 EST &bull; OPEN SOURCE &bull; NO CLASSIFICATION</div>
-</div>
+<h1>🛡️ SENTINEL PRIME BRIEFING — FRI 13 FEB 2026</h1>
 
-<!-- BLUF -->
-<h2>BLUF — BOTTOM LINE UP FRONT</h2>
 <div class="bluf">
-<p><span class="highlight">PERSIAN GULF ESCALATION DOMINANT.</span> Pentagon ordered a second carrier strike group to prepare for Middle East deployment — historically a pre-strike indicator. E-4B Nightwatch made an unscheduled flight to DC during Iran strike deliberations. THAAD battery confirmed operational in Jordan via satellite imagery. Diplomacy via Oman continues but gap between US and Iran demands remains wide.</p>
-<p><span class="highlight">STRATEGIC ENVIRONMENT SHIFTED.</span> New START expired Feb 5 — first time since 1972 with no binding US-Russia nuclear limits. USAF signaled readiness to re-MIRV ICBMs and make all B-52s nuclear-capable.</p>
-<p><span class="highlight">MARKETS DIVERGING.</span> Energy Paradox intensifying: XLE +20% YTD while crude languishes at $65. Gold at $5,073 — massive safe-haven bid. Defensive sector rotation signals late-cycle positioning. Jan CPI due Friday.</p>
-<p><span class="moderate">CYBER:</span> Russian APT "Static Tundra" targeting European energy grids. Iranian APT "Infy" reconstituting C2 infrastructure post-blackout.</p>
+<strong>BLUF:</strong> Overall posture <span class="tier tier-amber">TIER 2 — ELEVATED</span>. No Tier 1 triggers fired, but multiple yellow flags converging: BTC cratered 30% from prior scan, defensive rotation accelerating (XLU +2.14%, Gold &gt;$5K), VIX contango at 7pts, margin debt at all-time record $1.226T. Iran force posture consistent with pre-strike positioning — 12 warships, CVN-72 AIS-dark, CENTCOM readiness exercise — but no go-signal detected. El Paso NDA airspace closure (10-day, unexplained) warrants monitoring. <span class="confidence">Confidence: MEDIUM (65%) — converging stress signals without a catalyst.</span>
 </div>
 
-<!-- STRATEGIC POSTURE -->
-<h2>STRATEGIC POSTURE</h2>
 <div class="section">
-<p>The intelligence environment is dominated by converging escalation signals in the Persian Gulf theater, a post-arms-control strategic nuclear landscape, and late-cycle market stress. No single vector is at RED independently, but the correlation of Persian Gulf military buildup + New START expiration + cyber operations against energy infrastructure creates compound risk.</p>
-<div style="margin-top:12px">
+<h2 onclick="toggle(this)">📊 Tier Assessment</h2>
+<div class="section-body show">
 <table>
-<tr><th>Domain</th><th>Level</th><th>Trend</th></tr>
-<tr><td>Persian Watch</td><td><span class="badge badge-high">HIGH</span></td><td>↑ Escalating</td></tr>
-<tr><td>Doomsday Watch</td><td><span class="badge badge-yellow">YELLOW</span></td><td>↑ Elevated post-New START</td></tr>
-<tr><td>Threat Watch</td><td><span class="badge badge-yellow">YELLOW</span></td><td>→ Stable</td></tr>
-<tr><td>Markets</td><td><span class="badge badge-amber">AMBER</span></td><td>↑ Divergence widening</td></tr>
-<tr><td>Macro</td><td><span class="badge badge-yellow">YELLOW</span></td><td>→ Mixed signals</td></tr>
-<tr><td>World News</td><td><span class="badge badge-yellow">YELLOW</span></td><td>→ Active</td></tr>
+<tr><th>Domain</th><th>Tier</th><th>Status</th></tr>
+<tr><td>Persian Watch</td><td><span class="tier tier-amber">AMBER</span></td><td>Force posture elevated, diplomacy window open</td></tr>
+<tr><td>Market Watch</td><td><span class="tier tier-green">TIER 3</span></td><td>Indices flat, VIX low spot but steep contango</td></tr>
+<tr><td>Threat Watch</td><td><span class="tier tier-yellow">TIER 2</span></td><td>El Paso NDA + CISA ED 26-01</td></tr>
+<tr><td>Macro Watch</td><td><span class="tier tier-yellow">TIER 2</span></td><td>BTC -30%, defensive rotation, margin debt ATH</td></tr>
 </table>
 </div>
 </div>
 
-<!-- PERSIAN WATCH -->
-<h2>🇮🇷 PERSIAN WATCH <span class="badge badge-high">HIGH</span></h2>
 <div class="section">
-<h3>Key Developments</h3>
-<ul>
-<li><span class="highlight">SECOND CARRIER ORDERED:</span> Pentagon directed a second CSG (likely USS George H.W. Bush) to prepare for Middle East deployment. Arrival in ~2 weeks creates a de facto diplomatic deadline.</li>
-<li><span class="highlight">DRONE SHOOTDOWN (Feb 3):</span> USS Abraham Lincoln CSG shot down an Iranian surveillance drone — first kinetic engagement of this cycle.</li>
-<li>USS Abraham Lincoln CSG operating in Persian Gulf with F-35C and F/A-18 strike aircraft.</li>
-<li>Multiple Tomahawk-capable destroyers in theater (USS Delbert D. Black, Mitscher, McFaul).</li>
-<li>USAF F-35A stealth fighters staging at forward bases in region.</li>
-</ul>
-
-<h3>Diplomacy</h3>
-<ul>
-<li>Oman-mediated indirect talks: Round 1 (Feb 6) described as "a good start."</li>
-<li>Iran's Larijani met Sultan Haitham (Feb 10) — lengthy meeting seen as potentially promising.</li>
-<li><strong>Scope dispute:</strong> US wants nuclear + missiles + proxies + human rights. Iran insists nuclear-only.</li>
-<li>Iran offered to dilute 60% enriched stockpile for full sanctions relief — a concession but short of US demands.</li>
-<li>Turkish FM says US may show flexibility on total enrichment ban — potential breakthrough signal.</li>
-<li>Trump: diplomatic failure means military action.</li>
-</ul>
-
-<h3>Nuclear Program</h3>
-<ul>
-<li>Iran continues enriching at 60% purity (weapons-grade: 90%).</li>
-<li class="highlight">IAEA assesses Iran has material for ~9 weapons if further enriched.</li>
-<li>Iran hardening Esfahan Nuclear Technology Center tunnels (satellite imagery, early Feb).</li>
-<li>Breakout time significantly shortened; weaponization requires additional time.</li>
-</ul>
-
-<h3>72-Hour Outlook</h3>
+<h2 onclick="toggle(this)">⚔️ Persian Watch — Geopolitical Vectors</h2>
+<div class="section-body">
+<p><strong>Strike Probability:</strong> Assessed "virtually certain" by Western source (Jan 30) — no change. Force indicators consistent with pre-strike positioning but no go-signal in 48h.</p>
 <table>
-<tr><td>Continued diplomacy via Oman</td><td>60%</td></tr>
-<tr><td>Second carrier deployment order issued</td><td>70%</td></tr>
-<tr><td>US kinetic strike</td><td>10%</td></tr>
-<tr><td>Iranian provocative action</td><td>25%</td></tr>
+<tr><th>Vector</th><th>Status</th><th>Key Finding</th></tr>
+<tr><td>Iran Strike Intel</td><td><span class="tier tier-amber">AMBER</span></td><td>12 warships, F-15Es at Muwaffaq Salti, CVN-72 AIS-dark</td></tr>
+<tr><td>Nuclear</td><td><span class="tier tier-amber">AMBER</span></td><td>IR-20 reactor expected online 2026; undeclared uranium unresolved</td></tr>
+<tr><td>Doomsday/NC3</td><td><span class="tier tier-green">GREEN</span></td><td>E-4B LAX landing (Jan 10) assessed routine</td></tr>
+<tr><td>Airspace/NOTAMs</td><td><span class="tier tier-amber">AMBER</span></td><td>FAA KICZ advisory active; CENTCOM readiness exercise</td></tr>
+<tr><td>EAM/SKYKING</td><td><span class="tier tier-green">GREEN</span></td><td>Baseline traffic, no anomalies</td></tr>
+<tr><td>Energy/Defense Options</td><td><span class="tier tier-green">GREEN</span></td><td>Markets shrugging off tensions; no smoking gun contracts</td></tr>
 </table>
-<p style="margin-top:8px;color:#888;font-size:.85em">Confidence: MEDIUM-HIGH (multi-source OSINT convergence)</p>
+<p style="margin-top:10px"><strong>Key Shift:</strong> Iran's deterrence posture shifted from "limited retaliation" to "prolonged regional war" framing — escalation ladder compressed. Trump "come to the table" messaging keeps diplomacy window cracked.</p>
+<p><strong>CENTCOM:</strong> CVN-72 + CVW-9 (F-35C, F/A-18E/F, EA-18G, E-2D) off Oman. 8x Arleigh Burke DDGs across Arabian Gulf/Red Sea.</p>
+</div>
 </div>
 
-<!-- DOOMSDAY WATCH -->
-<h2>☢️ DOOMSDAY WATCH <span class="badge badge-yellow">YELLOW</span></h2>
 <div class="section">
-<h3>Key Indicators</h3>
-<ul>
-<li><span class="highlight">NEW START EXPIRED (Feb 5):</span> No binding US-Russia nuclear arms limits for first time since 1972.</li>
-<li><span class="highlight">E-4B NIGHTWATCH:</span> Unscheduled flight to Washington DC ~Feb 6, coinciding with Iran strike deliberations. NC3 posture alignment with senior leadership.</li>
-<li><span class="highlight">THAAD IN JORDAN:</span> Full battery confirmed operational at Muwaffaq al-Salti Air Base via Chinese satellite imagery (Jan 21). Forward missile defense consistent with Iran contingency.</li>
-<li>USAF signaled readiness to re-MIRV Minuteman III ICBMs with W78 warheads.</li>
-<li>USAF ready to make ALL B-52s nuclear-capable (currently partial fleet).</li>
-<li>Navy preparing to upload additional warheads to Ohio-class SSBNs.</li>
-<li>E-6B TACAMO elevated Atlantic patrol activity.</li>
-</ul>
+<h2 onclick="toggle(this)">📈 Market Posture</h2>
+<div class="section-body">
+<div class="grid">
+<div>
+<div class="metric"><span class="metric-label">SPX</span><span>6,929.94 <span class="delta-down">↓0.03%</span></span></div>
+<div class="metric"><span class="metric-label">SPY</span><span>681.54</span></div>
+<div class="metric"><span class="metric-label">QQQ</span><span>600.50</span></div>
+<div class="metric"><span class="metric-label">IWM</span><span>260.58 <span class="delta-down">↓0.54%</span></span></div>
+<div class="metric"><span class="metric-label">VIX Spot</span><span>13.60 <span class="delta-up">↑0.97%</span></span></div>
+<div class="metric"><span class="metric-label">VIX Futures</span><span>20.58</span></div>
+</div>
+<div>
+<div class="metric"><span class="metric-label">WTI Crude</span><span>$62.79 <span class="delta-down">↓0.08%</span></span></div>
+<div class="metric"><span class="metric-label">Brent</span><span>$67.49 <span class="delta-flat">↔</span></span></div>
+<div class="metric"><span class="metric-label">Gold Futures</span><span>$5,016.55 <span class="delta-up">↑$68</span></span></div>
+<div class="metric"><span class="metric-label">Nat Gas</span><span>$3.162 <span class="delta-down">↓1.71%</span></span></div>
+<div class="metric"><span class="metric-label">XLE</span><span>53.90</span></div>
+<div class="metric"><span class="metric-label">GLD</span><span>458.60</span></div>
+</div>
+</div>
+<div class="flag">⚠️ VIX Contango Spread: 6.98 pts (13.60 spot vs 20.58 futures) — market pricing significant forward vol event despite complacent spot. Watch for mean reversion catalyst.</div>
+<div class="flag">⚠️ Gold &gt;$5K — safe haven bid persistent. Flight-to-safety positioning confirmed.</div>
+<p style="margin-top:10px"><strong>Unusual Activity:</strong> VMC — 2,917 put contracts (300x avg daily put vol, 40x call vol). Mar 20 2026 expiry. Stock -$7.31 to $323.06. Source: Schwab.</p>
+<p><strong>Energy Paradox:</strong> No unusual XLE options flow detected. Crude soft (WTI sub-$63). No smoking gun contracts. Paradox structure quiet this cycle. <span class="delta-flat">↔</span></p>
+<p><strong>Defense:</strong> Pentagon DOD extended review announced. Trump EO threatens contract cancellation for firms prioritizing buybacks. Affects RTX, LHX, LMT, NOC, BA. LMT at $473.16.</p>
+</div>
+</div>
 
-<h3>Vector Summary</h3>
+<div class="section">
+<h2 onclick="toggle(this)">🌐 Macro Indicators</h2>
+<div class="section-body">
+<div class="grid">
+<div>
+<div class="metric"><span class="metric-label">USD/JPY</span><span>153.65 <span class="delta-up">↑0.42%</span></span></div>
+<div class="metric"><span class="metric-label">DXY</span><span>96.91 <span class="delta-flat">↔</span></span></div>
+<div class="metric"><span class="metric-label">ES Futures</span><span>6,849 <span class="delta-down">↓1.67%</span></span></div>
+</div>
+<div>
+<div class="metric"><span class="metric-label">BTC</span><span>$67,154 <span class="delta-down">↓30.2%</span></span></div>
+<div class="metric"><span class="metric-label">HY OAS</span><span>2.84 <span class="delta-flat">↔</span></span></div>
+<div class="metric"><span class="metric-label">Margin Debt</span><span>$1.226T (ATH)</span></div>
+</div>
+</div>
+<div class="flag">🚨 BTC -30.2% from prior scan ($96K → $67K) — multi-day drawdown, not single overnight. Confirm gradual vs sudden.</div>
+<div class="flag">⚠️ ES -1.67% between scans — approaching but below Tier 1 threshold (2%+VIX 25).</div>
+<div class="flag">⚠️ XLU +2.14% — defensive rotation accelerating. Confirms Gold/safety bid.</div>
+<div class="flag">⚠️ Margin debt at all-time record $1.226T — leverage risk elevated for any catalyst.</div>
+<p style="margin-top:10px"><strong>Carry Trade:</strong> JGB 10Y at 2.24%. USD/JPY +0.42% — no acute stress but structural risk persists. Watch for BOJ signals.</p>
+<p><strong>Credit:</strong> HY OAS stable at 2.84. No repo stress, no fund gates. Credit not confirming equity/crypto stress yet.</p>
+<p><strong>VIX Data Conflict:</strong> Yahoo shows 15.06, Investing.com shows 21.48 open — requires verification. Alpaca live shows 13.60.</p>
+</div>
+</div>
+
+<div class="section">
+<h2 onclick="toggle(this)">🔴 Threat Vectors</h2>
+<div class="section-body">
 <table>
-<tr><td>E-4B Nightwatch</td><td><span class="badge badge-amber">ANOMALOUS</span></td></tr>
-<tr><td>THAAD (Jordan)</td><td><span class="badge badge-amber">ACTIVE</span></td></tr>
-<tr><td>E-6B TACAMO</td><td><span class="badge badge-yellow">ELEVATED</span></td></tr>
-<tr><td>Nuclear Subs</td><td><span class="badge badge-yellow">ELEVATED</span></td></tr>
-<tr><td>Strategic Bombers</td><td><span class="badge badge-yellow">ELEVATED</span></td></tr>
-<tr><td>ICBM Tests</td><td><span class="badge badge-green">BASELINE</span></td></tr>
-<tr><td>DEFCON/FPCON</td><td><span class="badge badge-green">BASELINE</span></td></tr>
-<tr><td>Space Early Warning</td><td><span class="badge badge-green">BASELINE</span></td></tr>
-<tr><td>Civil Defense</td><td><span class="badge badge-green">BASELINE</span></td></tr>
-</table>
-<p style="margin-top:8px;color:#888;font-size:.85em">Confidence: MEDIUM-HIGH | Would escalate to AMBER on simultaneous E-6B/E-4B flights, SSBN surge, or DEFCON change.</p>
-</div>
-
-<!-- THREAT WATCH -->
-<h2>🛡️ THREAT WATCH <span class="badge badge-yellow">YELLOW</span></h2>
-<div class="section">
-<table>
-<tr><th>Vector</th><th>Level</th><th>Detail</th></tr>
-<tr><td>Solar/Space</td><td><span class="badge badge-green">GREEN</span></td><td>All scales nominal. Low event probability through Feb 14.</td></tr>
-<tr><td>Seismic</td><td><span class="badge badge-green">GREEN</span></td><td>M4.6 Alaska, M2.9 South Carolina — normal background.</td></tr>
-<tr><td>Biological</td><td><span class="badge badge-yellow">YELLOW</span></td><td>Fatal Nipah case in Bangladesh (40-75% CFR). Measles: 1,031 cases in Americas first 3 weeks of 2026.</td></tr>
-<tr><td>Nuclear/Rad</td><td><span class="badge badge-yellow">YELLOW</span></td><td>Iran hardening Esfahan tunnels. SK/Saudi proliferation trends. No active incidents.</td></tr>
-<tr><td>Cyber/Infra</td><td><span class="badge badge-yellow">YELLOW</span></td><td class="highlight">Russian APT "Static Tundra" attacked Poland's energy grid (Dec 2025). Russia struck Ukraine energy infra with secondary SCADA cyber intrusions. UK NCSC "severe" threat warning to all CNI.</td></tr>
+<tr><th>Vector</th><th>Status</th><th>Finding</th></tr>
+<tr><td>☀️ Solar</td><td><span class="tier tier-green">GREEN</span></td><td>Kp 1.0-3.0. No X-class flares. No storm conditions.</td></tr>
+<tr><td>🦠 Biological</td><td><span class="tier tier-green">GREEN</span></td><td>Marburg ended. Bangladesh Nipah isolated (1 case). No PHEIC.</td></tr>
+<tr><td>🌍 Seismic</td><td><span class="tier tier-green">GREEN</span></td><td>0 significant events past 24h.</td></tr>
+<tr><td>⚡ Grid/Cyber</td><td><span class="tier tier-yellow">YELLOW</span></td><td>CISA ED 26-01: F5 vulns, deadline Mar 1. HPE OneView active exploitation.</td></tr>
+<tr><td>✈️ Airspace</td><td><span class="tier tier-yellow">YELLOW</span></td><td>El Paso NDA TFR active Feb 10-20. 10-day, unexplained, border region.</td></tr>
+<tr><td>🤖 AI Repricing</td><td><span class="tier tier-green">GREEN</span></td><td>Apple-Google Gemini iOS partnership (Mar 2026). Incremental, not disruptive.</td></tr>
 </table>
 </div>
-
-<!-- MARKETS -->
-<h2>📊 MARKETS & ENERGY PARADOX <span class="badge badge-amber">AMBER</span></h2>
-<div class="section">
-<h3>⚡ Energy Paradox — Intensifying</h3>
-<div class="kv"><span class="k">XLE YTD</span><span class="v highlight">+20% (sector leader)</span></div>
-<div class="kv"><span class="k">WTI Crude</span><span class="v">$64.91/bbl</span></div>
-<div class="kv"><span class="k">Brent Crude</span><span class="v">$69.68/bbl</span></div>
-<div class="kv"><span class="k">Narrative Driver</span><span class="v">Venezuela post-Maduro + CVX Libya win</span></div>
-<p style="margin-top:8px">Energy equities pricing in geopolitical renaissance while underlying commodity refuses to confirm. XLE +20% built on narrative, not fundamentals. Severe mean-reversion risk if WTI breaks below $60.</p>
-
-<h3>Commodities & Safe Haven</h3>
-<div class="kv"><span class="k">Gold</span><span class="v highlight">$5,073/oz (near ATH)</span></div>
-<div class="kv"><span class="k">Natural Gas</span><span class="v">$3.15/MMBtu</span></div>
-<div class="kv"><span class="k">DXY</span><span class="v">~96.80 (structural weakness)</span></div>
-
-<h3>Indices</h3>
-<div class="kv"><span class="k">SPY</span><span class="v">+0.1% pre (steady)</span></div>
-<div class="kv"><span class="k">QQQ</span><span class="v">-2.4% 30d (tech underperforming)</span></div>
-<div class="kv"><span class="k">VIX</span><span class="v">Moderate — vol sellers in control</span></div>
-
-<h3>Sector Rotation</h3>
-<p>Defensives leading (XLE, XLP, XLV) while growth lags (XLK, XLF) = <span class="moderate">classic late-cycle signal</span>. Bulls need tech to reclaim leadership.</p>
-</div>
-
-<!-- MACRO -->
-<h2>🏛️ MACRO <span class="badge badge-yellow">YELLOW</span></h2>
-<div class="section">
-<h3>Fed & Rates</h3>
-<div class="kv"><span class="k">Fed Rate</span><span class="v">3.50%-3.75% (hold)</span></div>
-<div class="kv"><span class="k">Jan CPI (due Feb 14)</span><span class="v">Core forecast 2.5%</span></div>
-<div class="kv"><span class="k">Jan NFP</span><span class="v">130K vs 55K expected</span></div>
-<div class="kv"><span class="k">Unemployment</span><span class="v">4.3%</span></div>
-<div class="kv"><span class="k">10Y Yield</span><span class="v">4.174%</span></div>
-<div class="kv"><span class="k">Next Cut Expected</span><span class="v">June (under incoming chair Warsh)</span></div>
-
-<h3>Trade & Tariffs <span class="badge badge-red">CRITICAL</span></h3>
-<ul>
-<li>Weighted avg tariff: <strong>13.5%</strong> — highest since 1946</li>
-<li>Avg household tax increase: $1,300/yr | GDP drag: -0.5%</li>
-<li>House voted against Canada tariffs — rare bipartisan rebuke</li>
-<li>Trump considering quitting USMCA</li>
-<li>Supreme Court to rule on IEEPA tariff authority</li>
-</ul>
-
-<h3>AI Disruption</h3>
-<p>Anthropic unveiled enterprise AI tool triggering software stock selloff. Shift from theoretical to actual enterprise displacement underway. OpenAI eyeing $800B+ valuation.</p>
-
-<h3>Geopolitical Flashpoints</h3>
-<ul>
-<li><span class="highlight">Ukraine:</span> ~1.2M Russian casualties; could reach 2M by spring. Ukraine energy at 60% capacity. Russia economy: 0.6% growth.</li>
-<li><span class="moderate">Taiwan Strait:</span> China-Japan diplomatic crisis adds complexity.</li>
-<li>BOJ may hike as early as March/April (up to 3 hikes in 2026).</li>
-</ul>
-</div>
-
-<!-- WORLD NEWS -->
-<h2>🌍 WORLD NEWS <span class="badge badge-yellow">YELLOW</span></h2>
-<div class="section">
-<ul>
-<li><strong>US-Iran Enrichment Flexibility:</strong> Turkish FM says US may accept limited enrichment schema — potential diplomatic opening.</li>
-<li><strong>El Paso Airspace Closure:</strong> Pentagon tested anti-drone high-energy laser near Fort Bliss to counter cartel drones. FAA coordination failure exposed.</li>
-<li><strong>US-Europe Pullback:</strong> Pentagon deprioritizing Europe in 2026 NDS. Policy chief attended NATO meeting instead of SecDef — deliberate snub.</li>
-<li><strong>Bangladesh Elections:</strong> Vote counting across 299 constituencies; marred by violence. Outcome shapes South Asian alignment.</li>
-<li><strong>India-US Trade Deal Friction:</strong> Modi faces domestic blowback; White House revised factsheet terms.</li>
-<li><strong>Europe Compensating for US Ukraine Aid Withdrawal:</strong> Germany now largest single military donor at €9B (130% increase).</li>
-<li><strong>North Korea WPK Congress:</strong> Late February — expect nuclear posture updates.</li>
-<li><strong>China Unfazed by Tariffs:</strong> Factories humming; Goldman estimates tariffs shaving 2-3% off S&P 500 EPS.</li>
-</ul>
 </div>
 
 <div class="section">
-<h2>🤖 AI REVOLUTION WATCH <span class="badge badge-red">REPRICING RISK 82/100</span></h2>
-<p style="color:#666;font-size:.75em;margin-bottom:12px">Sources: Grok x_search (X/Twitter, 11 search groups) + Brave web_search | Collection: 72h lookback, 24h priority</p>
-
-<h3>REPRICING RISK ASSESSMENT</h3>
-<p>Dashboard baseline: <strong>82/100 — STABLE with upward pressure.</strong> Chinese open-source releases (GLM-5, Seedance 2.0) demonstrate continued efficiency gains at &lt;20% of US compute costs. No single DeepSeek R1-class shock, but cumulative momentum in multimodal/video compresses NVDA/AMD inference multiples. Key question: do these developments compress or expand NVDA's multiple?</p>
-
-<h3>EXECUTIVE SUMMARY — TOP SIGNALS</h3>
-<ul>
-<li><span class="badge badge-red">CRITICAL</span> <strong>Anthropic/OpenAI dueling launches (Feb 5):</strong> Claude Opus 4.6 and GPT-5.3 Codex dropped minutes apart. Claude's 16-agent C compiler demo is the agentic coding watershed. $285B wiped from SaaS stocks.</li>
-<li><span class="badge badge-red">CRITICAL</span> <strong>Zhipu GLM-5 released:</strong> 744B MoE (40B active), open weights, MIT license. Matches Claude Opus 4.6 in agentic tasks at 1/5th inference cost. DeepSeek R1-class repricing trigger potential.</li>
-<li><span class="badge badge-red">CRITICAL</span> <strong>Chinese model tsunami imminent:</strong> Qwen 3.5, DeepSeek V4, ByteDance Seedance 2.0, Zhipu GLM-5 all dropping pre-Lunar New Year. Another overnight repricing event is possible.</li>
-<li><span class="badge badge-red">CRITICAL</span> <strong>Anthropic $350B valuation:</strong> $20B raise with Blackstone. Largest private AI valuation ever.</li>
-<li><span class="badge badge-amber">HIGH</span> <strong>NVIDIA Rubin shipping H2, gaming GPU skipped:</strong> HBM shortage so severe they're skipping a consumer generation for the first time in 30 years. Supply constraint = pricing power.</li>
-<li><span class="badge badge-amber">HIGH</span> <strong>Multi-chip diversification accelerating:</strong> Anthropic confirmed NVDA + AMD MI455X + Google TPU strategy. OpenAI 6GW AMD deal. NVDA's 80% share at structural risk.</li>
-<li><span class="badge badge-amber">HIGH</span> <strong>Safety alarm:</strong> Nature paper proves reasoning models are autonomous jailbreak agents. 43/52 models broken by single researcher. GPT-5 broke at level 2.</li>
+<h2 onclick="toggle(this)">🔗 Cross-Domain Correlations</h2>
+<div class="section-body">
+<ul style="padding-left:20px">
+<li><strong>Market Complacency vs Force Posture:</strong> Markets "callous" to Iran tensions (CNBC) while CENTCOM maintains pre-strike posture. Asymmetric repricing risk if kinetic action occurs. VIX contango (7pts) suggests forward hedging but spot complacency.</li>
+<li><strong>Defensive Rotation Convergence:</strong> Gold &gt;$5K + XLU +2.14% + BTC -30% = smart money rotating defensive while risk assets compress. Margin debt at ATH amplifies any unwind.</li>
+<li><strong>Iran Deterrence Shift + Energy:</strong> Iran's "prolonged regional war" framing should logically elevate crude/energy options — yet no unusual flow detected. Either market doesn't believe it or positioning is via instruments not captured in scan.</li>
+<li><strong>El Paso NDA + CENTCOM:</strong> Domestic airspace closure concurrent with overseas readiness exercise. Likely unrelated (border ops vs ME posture) but temporal correlation noted.</li>
 </ul>
-
-<h3>CRITICAL &amp; HIGH IMPACT</h3>
-
-<h3 style="color:#ff79c6">Frontier Model Releases</h3>
-<ul>
-<li><strong>Claude Opus 4.6:</strong> Anthropic flagship. 16-agent C compiler (compiles Linux). AWS Bedrock + Microsoft Foundry. 80% enterprise revenue. Outperforms Gemini 3 Flash.</li>
-<li><strong>GPT-5.3 Codex:</strong> OpenAI agentic coding model. 25% faster than 5.2. First model "instrumental in creating itself." Enterprise platform: HP, Oracle, Uber early adopters.</li>
-<li><strong>Zhipu GLM-5 (China):</strong> 744B total / 40B active MoE, open weights MIT license. Approaches Opus 4.6 parity on agentic/coding benchmarks at fraction of cost.</li>
-</ul>
-
-<h3 style="color:#ff79c6">Open Source &amp; Efficiency</h3>
-<ul>
-<li><strong>DeepSeek mHC training:</strong> Bypasses compute bottlenecks (10x reduction claims). Influences frontier open LLMs via MoE/sparse attention.</li>
-<li><strong>Qwen3-Coder-Next:</strong> 80B MoE (3B active), hybrid attention. Open beats closed on verifiable coding tasks.</li>
-<li><strong>Chinese labs now 30% of global HuggingFace downloads.</strong> Qwen downloads &gt;1B. Efficiency frontier shifting east.</li>
-</ul>
-
-<h3 style="color:#ff79c6">Hardware &amp; Infrastructure</h3>
-<ul>
-<li><strong>NVIDIA Rubin:</strong> Mass production started, shipping H2 2026. Gaming GPU delayed — HBM shortage (first skip in 30 years).</li>
-<li><strong>AMD GPU revenue &gt; CPU revenue</strong> for first time ever. Datacenter AI now dominant business.</li>
-<li><strong>ByteDance developing SeedChip inference ASIC</strong> with Samsung. Huawei Ascend production ramping. Chinese domestic chips reducing US export dependency.</li>
-<li><strong>Cisco Silicon One G300:</strong> 3nm AI networking chip targeting $600B infrastructure market.</li>
-<li><strong>Big Tech AI capex ~$700B in 2026:</strong> AMZN $200B, GOOGL $175B, MSFT ~$145B.</li>
-</ul>
-
-<h3 style="color:#ff79c6">Agentic AI &amp; Autonomy</h3>
-<ul>
-<li><strong>16 Claude agents built a C compiler from scratch</strong> — can compile Linux. Multi-agent collaboration is production-ready.</li>
-<li><strong>OpenAI shipped 1M+ line codebase via recursive agents</strong> in 1/10th the time. 30-40% of research code now AI-assisted.</li>
-<li><strong>Microsoft open-sourced Agent Framework:</strong> Python engine for multi-agent workflows, graph-based. Enterprise consolidation play.</li>
-<li><strong>"Agentic engineering" replacing "vibe coding"</strong> as 2026 trend — agents managing issue triage, PRs, full-module refactoring autonomously.</li>
-</ul>
-
-<h3 style="color:#ff79c6">Chinese AI Ecosystem</h3>
-<ul>
-<li><strong>ByteDance Seedance 2.0:</strong> Multimodal video (text/image/audio → 15s videos in &lt;60s). Viral "second DeepSeek moment." Doubao leads with 155M weekly users.</li>
-<li><strong>GLM-5 + Kimi K2.5 + Qwen3-Coder:</strong> Chinese labs achieving parity across coding, vision, agent benchmarks at fraction of US compute.</li>
-<li><strong>DeepSeek V4 expected mid-Feb.</strong> Qwen 3.5 support code already on HuggingFace. Pre-Lunar New Year release wave imminent.</li>
-<li><strong>ByteDance SeedChip + Huawei Ascend:</strong> Domestic chip ecosystem maturing. $170B+ industry projection.</li>
-</ul>
-
-<h3 style="color:#ff79c6">Regulation &amp; Policy</h3>
-<ul>
-<li><strong>EU AI Act high-risk deadlines Aug 2026.</strong> Emotion recognition banned, human oversight mandated.</li>
-<li><strong>Trump EO preempts state AI laws.</strong> Commerce Dept evaluation due March 11. Federal-state clash brewing with Colorado AI Act (effective Feb 1).</li>
-<li><strong>China deepfake labeling rules active.</strong> Platforms must reveal AI-generated content creators.</li>
-</ul>
-
-<h3>MEDIUM IMPACT</h3>
-<ul>
-<li><strong>Deals:</strong> Databricks $5B at $134B val. ElevenLabs $500M at $11B. Apptronik (humanoid robots) $520M at $5B. OpenAI projecting $20B ARR.</li>
-<li><strong>Products:</strong> OpenAI testing ads in ChatGPT (Anthropic ran Super Bowl ad mocking it). Goldman Sachs building Claude agents for trade accounting. Apple CarPlay opening to ChatGPT/Claude/Gemini.</li>
-<li><strong>Safety:</strong> Single prompt breaks 15 major LLMs. More capable models = better at understanding jailbreak prompts. OpenAI caught reasoning model cheating via mechanistic interpretability.</li>
-<li><strong>Influencers:</strong> Altman plans to "hand OpenAI to AI model." LeCun launches AMI Labs for world-model architectures (post-transformer). Karpathy: "agentic engineering" is the new paradigm.</li>
-</ul>
-
-<h3>MARKET IMPLICATIONS</h3>
-<table style="width:100%;border-collapse:collapse;font-size:.85em;margin:8px 0">
-<tr style="border-bottom:1px solid #444;color:#8be9fd"><th style="text-align:left;padding:4px">Ticker</th><th style="text-align:left;padding:4px">Signal</th><th style="text-align:left;padding:4px">Direction</th><th style="text-align:left;padding:4px">Urgency</th></tr>
-<tr style="border-bottom:1px solid #222"><td style="padding:4px"><strong>NVDA</strong></td><td style="padding:4px">Rubin shipping, but multi-chip diversification + Chinese efficiency compress moat</td><td style="padding:4px;color:#ffb86c">MIXED</td><td style="padding:4px">Immediate</td></tr>
-<tr style="border-bottom:1px solid #222"><td style="padding:4px"><strong>AMD</strong></td><td style="padding:4px">MI455X wins (Anthropic, OpenAI 6GW, META). GPU rev > CPU rev first time</td><td style="padding:4px;color:#50fa7b">BULLISH</td><td style="padding:4px">Immediate</td></tr>
-<tr style="border-bottom:1px solid #222"><td style="padding:4px"><strong>MSFT</strong></td><td style="padding:4px">Agent Framework open-sourced, Azure capex ~$145B, enterprise adoption</td><td style="padding:4px;color:#50fa7b">BULLISH</td><td style="padding:4px">Watch</td></tr>
-<tr style="border-bottom:1px solid #222"><td style="padding:4px"><strong>GOOGL</strong></td><td style="padding:4px">Claude beating Gemini 3 Flash in reviews, TPU optionality play</td><td style="padding:4px;color:#ffb86c">WATCH</td><td style="padding:4px">Watch</td></tr>
-<tr style="border-bottom:1px solid #222"><td style="padding:4px"><strong>META</strong></td><td style="padding:4px">LeCun departure to AMI Labs, open-source catch-up pressure, $115-135B capex</td><td style="padding:4px;color:#f8f8f2">NEUTRAL</td><td style="padding:4px">Watch</td></tr>
-<tr style="border-bottom:1px solid #222"><td style="padding:4px"><strong>AMZN</strong></td><td style="padding:4px">Bedrock gets Opus 4.6, Jassy bullish on AI, $200B capex</td><td style="padding:4px;color:#50fa7b">BULLISH</td><td style="padding:4px">Watch</td></tr>
-<tr style="border-bottom:1px solid #222"><td style="padding:4px"><strong>TSM</strong></td><td style="padding:4px">3nm at capacity, HBM4 production. But Chinese domestic chips (SeedChip/Ascend) reduce dependency</td><td style="padding:4px;color:#ffb86c">MIXED</td><td style="padding:4px">Immediate</td></tr>
-</table>
-<p style="color:#ff5555;margin-top:6px"><strong>⚠️ SaaS SECTOR WARNING:</strong> Anthropic's agent demo wiped $285B. Every major agent capability demo will pressure SaaS multiples. Structural headwind for traditional software.</p>
-
-<h3>TREND VECTORS — 30-DAY DIRECTION</h3>
-<ul>
-<li>Frontier capability curve: <strong style="color:#50fa7b">ACCELERATING</strong> (agentic/multimodal leaps)</li>
-<li>Open-source catch-up: <strong style="color:#50fa7b">ACCELERATING</strong> (Chinese 30% global downloads)</li>
-<li>Hardware supply: <strong style="color:#ff5555">TIGHTENING</strong> (HBM shortage, multi-chip fragments)</li>
-<li>Regulatory pressure: <strong style="color:#ff5555">INCREASING</strong> (EU/China deadlines, US patchwork)</li>
-<li>Chinese competitiveness: <strong style="color:#ff5555">INCREASING</strong> (video/agent parity at lower cost)</li>
-<li>Agent autonomy: <strong style="color:#50fa7b">ACCELERATING</strong> (production codebases, frameworks)</li>
-<li>AI monetization: <strong style="color:#50fa7b">STRENGTHENING</strong> (enterprise adoption, $700B capex)</li>
-</ul>
-
-<h3>ABSENCE-OF-SIGNAL</h3>
-<ul>
-<li>No GPT-5 / Claude 4 / Gemini 2 / Llama 4 announced. Frontier releases overdue.</li>
-<li>xAI (Grok), Stability AI silent this cycle.</li>
-<li>DeepSeek R2/V3 teased but not dropped. Qwen 3.5 support code on HF but no release yet.</li>
-<li>No NeurIPS/ICML previews. No major new transformer alternatives validated.</li>
-</ul>
-
-<h3>WATCHPOINTS — NEXT 72 HOURS</h3>
-<ul>
-<li><strong>Lunar New Year (Feb 17):</strong> Chinese lab releases (ByteDance/Alibaba/Zhipu). Overnight repricing risk.</li>
-<li><strong>DeepSeek V4 mid-Feb:</strong> Efficiency claims could trigger another shock.</li>
-<li><strong>Anthropic $20B round closing:</strong> Final terms and strategic investors.</li>
-<li><strong>Commerce Dept March 11:</strong> State AI law evaluation approaching.</li>
-<li><strong>CPI Friday (Feb 14):</strong> Hot print + AI rotation = cross-domain volatility.</li>
-</ul>
-
-<p style="color:#666;font-size:.7em;margin-top:12px">⚠️ CAVEAT: Grok x_search may fabricate or misattribute post IDs and handles. All citations should be independently verified before operational use. Cross-reference with AI Deflation/Repricing Risk Monitor (82/100).</p>
+</div>
 </div>
 
-<div class="footer">
-SENTINEL INTELLIGENCE PRODUCT &bull; OPEN SOURCE &bull; NO CLASSIFICATION<br>
-Generated 2026-02-12 0845 EST &bull; Updated 1200 EST (AI Revolution Watch added) &bull; Next briefing: 2026-02-13 0830 EST<br>
-Sources: OSINT multi-source — NOAA, USGS, WHO, CISA, ISW, IAEA, CNBC, Reuters, AP, NYT, flight tracking, satellite imagery, X/Twitter (Grok x_search), Brave Search
+<div class="section">
+<h2 onclick="toggle(this)">🔇 Absence-of-Signal</h2>
+<div class="section-body">
+<ul style="padding-left:20px">
+<li>No anomalous EAM/SKYKING traffic — baseline assumed normal</li>
+<li>No unusual E-6B Mercury activity in open source</li>
+<li>Energy/defense options flow quiet despite geopolitical posture — potential signal gap</li>
+<li>HY credit spreads stable despite equity/crypto stress — either credit is right or lagging</li>
+<li>All sub-agents reported on schedule — no missed cycles</li>
+</ul>
+</div>
 </div>
 
+<div class="section">
+<h2 onclick="toggle(this)">📋 Action Items</h2>
+<div class="section-body show">
+<ol style="padding-left:20px">
+<li><strong>Verify VIX:</strong> Conflicting data (13.60 vs 15.06 vs 21.48). Check live source during market hours.</li>
+<li><strong>BTC Drawdown Assessment:</strong> Confirm whether -30% was gradual bleed or sudden crash. Check if NQ correlation exists for Tier 1 eval.</li>
+<li><strong>Margin Debt Exposure:</strong> With $1.226T ATH leverage and converging stress signals — review any margin-sensitive positions.</li>
+<li><strong>Energy Paradox:</strong> Quiet cycle. No action needed but XLE options surface worth re-scanning if Iran tensions escalate.</li>
+<li><strong>El Paso NDA:</strong> Monitor for explanations. Closes Feb 20.</li>
+</ol>
+</div>
+</div>
+
+<div class="section">
+<h2 onclick="toggle(this)">👁️ Watchlist</h2>
+<div class="section-body show">
+<ul style="padding-left:20px">
+<li>Iran — CENTCOM force flow, NOTAM changes, IRGC mobilization signals</li>
+<li>VIX contango — catalyst for mean reversion (6.98pt spread)</li>
+<li>BTC — $65K support level; break below = potential cascade with margin debt leverage</li>
+<li>Gold — holding above $5K psychological; safe haven strength indicator</li>
+<li>VMC puts — 300x avg volume, unusual positioning</li>
+<li>F5 CISA deadline Mar 1 — infrastructure exposure check</li>
+<li>Pentagon DOD review — defense sector repricing risk</li>
+<li>BOJ signals — JGB 10Y at 2.24%, carry trade structural risk</li>
+</ul>
+</div>
+</div>
+
+<div class="timestamp">
+Generated: 2026-02-13 09:17 EST | Sentinel Prime Briefing v2.0<br>
+Sources: Alpaca Markets (live), Yahoo Finance, Investing.com, USGS, NOAA SWPC, CISA, FAA, Reuters, ISW, Schwab<br>
+Next briefing: 2026-02-14 ~0445 EST
+</div>
+
+<div class="disclaimer">
+DISCLAIMER: This report is generated by automated intelligence collection and synthesis. Confidence levels are estimates based on available open-source data. Not financial advice. Not a substitute for professional intelligence analysis. All data is from publicly available sources.
+</div>
+
+<script>
+function toggle(el){
+  el.classList.toggle('open');
+  const body=el.nextElementSibling;
+  body.classList.toggle('show');
+}
+document.querySelectorAll('h2').forEach(h=>{if(!h.nextElementSibling.classList.contains('show'))h.classList.remove('open');else h.classList.add('open')});
+</script>
 </body>
 </html>
