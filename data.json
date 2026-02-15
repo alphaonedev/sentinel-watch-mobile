@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-02-15T11:27:28.656213",
+  "threat_level": "TIER 1",
+  "threat_description": "CRITICAL \u2014 Imminent threat detected",
+  "active_agents": 15,
+  "elevated_domains": 7,
+  "total_domains": 15,
+  "agents": [
+    {
+      "name": "Persian Watch",
+      "status": "green",
+      "tier": "TIER 3",
+      "trend": "stable"
+    },
+    {
+      "name": "Threat Watch",
+      "status": "green",
+      "tier": "TIER 3",
+      "trend": "stable"
+    },
+    {
+      "name": "Macro Watch",
+      "status": "green",
+      "tier": "TIER 3",
+      "trend": "up"
+    },
+    {
+      "name": "Market Watch",
+      "status": "green",
+      "tier": "TIER 3",
+      "trend": "stable"
+    },
+    {
+      "name": "FTO Watch",
+      "status": "amber",
+      "tier": "TIER 2",
+      "trend": "stable"
+    },
+    {
+      "name": "Domestic Watch",
+      "status": "amber",
+      "tier": "TIER 2",
+      "trend": "stable"
+    },
+    {
+      "name": "Doomsday Watch",
+      "status": "green",
+      "tier": "TIER 3",
+      "trend": "stable"
+    },
+    {
+      "name": "China-Taiwan",
+      "status": "green",
+      "tier": "TIER 3",
+      "trend": "stable"
+    },
+    {
+      "name": "Russia-NATO",
+      "status": "amber",
+      "tier": "TIER 2",
+      "trend": "stable"
+    },
+    {
+      "name": "Cyber Watch",
+      "status": "amber",
+      "tier": "TIER 2",
+      "trend": "stable"
+    },
+    {
+      "name": "Supply Chain",
+      "status": "green",
+      "tier": "TIER 3",
+      "trend": "stable"
+    },
+    {
+      "name": "Weather Watch",
+      "status": "amber",
+      "tier": "TIER 2",
+      "trend": "stable"
+    },
+    {
+      "name": "UAP Watch",
+      "status": "green",
+      "tier": "TIER 3",
+      "trend": "stable"
+    },
+    {
+      "name": "AI Watch",
+      "status": "red",
+      "tier": "TIER 1",
+      "trend": "stable"
+    },
+    {
+      "name": "News Watch",
+      "status": "amber",
+      "tier": "TIER 2",
+      "trend": "stable"
+    }
+  ],
+  "key_developments": []
+}

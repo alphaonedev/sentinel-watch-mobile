@@ -1,48 +1,65 @@
-// Sentinel Dashboard - Chart.js Implementation
+// Sentinel Dashboard - Chart.js Implementation with Dynamic Data Loading
 
-const agentData = [
-    { name: 'Persian Watch', status: 'amber', tier: 'TIER 2', trend: 'up' },
-    { name: 'Threat Watch', status: 'amber', tier: 'TIER 2', trend: 'up' },
-    { name: 'Macro Watch', status: 'green', tier: 'TIER 3', trend: 'stable' },
-    { name: 'Market Watch', status: 'green', tier: 'TIER 3', trend: 'stable' },
-    { name: 'FTO Watch', status: 'amber', tier: 'TIER 2', trend: 'up' },
-    { name: 'Domestic Watch', status: 'amber', tier: 'TIER 2', trend: 'up' },
-    { name: 'Doomsday Watch', status: 'green', tier: 'TIER 3', trend: 'down' },
-    { name: 'China-Taiwan', status: 'green', tier: 'TIER 3', trend: 'down' },
-    { name: 'Russia-NATO', status: 'green', tier: 'TIER 3', trend: 'stable' },
-    { name: 'Cyber Watch', status: 'amber', tier: 'TIER 2', trend: 'up' },
-    { name: 'Supply Chain', status: 'amber', tier: 'TIER 2', trend: 'up' },
-    { name: 'Weather Watch', status: 'green', tier: 'TIER 3', trend: 'stable' },
-    { name: 'UAP Watch', status: 'green', tier: 'TIER 3', trend: 'stable' },
-    { name: 'AI Watch', status: 'red', tier: 'TIER 1', trend: 'up' },
-    { name: 'News Watch', status: 'amber', tier: 'TIER 2', trend: 'stable' }
-];
+let dashboardData = null;
 
-const keyDevelopments = [
-    { domain: 'Persian Watch', text: 'USS Gerald Ford deploying to join USS Abraham Lincoln CSG — dual carrier posture in Persian Gulf', priority: 'high' },
-    { domain: 'FTO Watch', text: 'TdA judicial interference undermining gang enforcement — threat escalating to MEDIUM-HIGH', priority: 'high' },
-    { domain: 'Domestic Watch', text: 'DHS shutdown continues (10+ days) — 3rd government shutdown in 5 months', priority: 'high' },
-    { domain: 'Russia-NATO', text: 'Geneva peace talks scheduled next week — critical diplomatic window for Ukraine', priority: 'medium' },
-    { domain: 'Supply Chain', text: 'Strait of Hormuz elevated threat — Iranian drone shot down near carrier', priority: 'high' },
-    { domain: 'Cyber Watch', text: 'CVE-2026-1731 under active exploitation — federal deadline March 5', priority: 'high' },
-    { domain: 'AI Watch', text: 'Anthropic Head of Safeguards resigned — "world is in peril" warning', priority: 'critical' }
-];
+// Load data and initialize
+async function loadAndInit() {
+    try {
+        const response = await fetch('./data.json');
+        dashboardData = await response.json();
+        initDashboard();
+    } catch (error) {
+        console.error('Failed to load dashboard data:', error);
+        // Fallback to demo data if load fails
+        initDashboard();
+    }
+}
 
 // Initialize UI
 function initDashboard() {
-    // Set timestamp
-    const now = new Date();
-    document.getElementById('timestamp').textContent = 
-        `Sunday, ${now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} — ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })}`;
+    if (!dashboardData) {
+        // Demo data fallback
+        dashboardData = {
+            timestamp: new Date().toISOString(),
+            threat_level: 'TIER 2',
+            threat_description: 'ELEVATED — Multiple domains showing convergence',
+            active_agents: 15,
+            elevated_domains: 7,
+            total_domains: 15,
+            agents: [],
+            key_developments: []
+        };
+    }
     
-    // Set threat metrics
-    document.getElementById('activeAgents').textContent = `${agentData.length}/${agentData.length}`;
-    const elevated = agentData.filter(a => a.status === 'amber' || a.status === 'red').length;
-    document.getElementById('elevatedDomains').textContent = `${elevated}/15`;
+    // Set timestamp
+    const timestamp = new Date(dashboardData.timestamp);
+    document.getElementById('timestamp').textContent = 
+        `${timestamp.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })} — ${timestamp.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' })}`;
+    
+    // Set threat level
+    const threatEl = document.getElementById('threatLevel');
+    threatEl.textContent = dashboardData.threat_level;
+    threatEl.className = 'threat-level';
+    if (dashboardData.threat_level === 'TIER 1') threatEl.classList.add('tier-1');
+    else if (dashboardData.threat_level === 'TIER 2') threatEl.classList.add('tier-2');
+    else threatEl.classList.add('tier-3');
+    
+    document.getElementById('threatDescription').textContent = dashboardData.threat_description;
+    
+    // Set fleet metrics
+    document.getElementById('activeAgents').textContent = `${dashboardData.active_agents}/${dashboardData.active_agents}`;
+    document.getElementById('elevatedDomains').textContent = `${dashboardData.elevated_domains}/${dashboardData.total_domains}`;
+    
+    // Calculate time since last scan (from timestamp)
+    const now = new Date();
+    const scanTime = new Date(dashboardData.timestamp);
+    const minutesAgo = Math.floor((now - scanTime) / 60000);
+    document.getElementById('lastScan').textContent = minutesAgo < 1 ? 'Just now' : `${minutesAgo} min ago`;
     
     // Populate agent grid
     const grid = document.getElementById('agentGrid');
-    agentData.forEach(agent => {
+    grid.innerHTML = '';
+    dashboardData.agents.forEach(agent => {
         const card = document.createElement('div');
         card.className = 'agent-card';
         card.innerHTML = `
@@ -54,7 +71,8 @@ function initDashboard() {
     
     // Populate key developments
     const devsContainer = document.getElementById('keyDevelopments');
-    keyDevelopments.forEach(dev => {
+    devsContainer.innerHTML = '';
+    dashboardData.key_developments.forEach(dev => {
         const devEl = document.createElement('div');
         devEl.className = 'metric-row';
         const priorityColor = dev.priority === 'critical' ? '#ef5350' : dev.priority === 'high' ? '#ffa726' : '#90caf9';
@@ -175,25 +193,38 @@ function initMacroTrendChart() {
 // Domain convergence bar chart
 function initConvergenceChart() {
     const ctx = document.getElementById('convergenceChart').getContext('2d');
+    
+    // Filter elevated agents for convergence display
+    const elevatedAgents = dashboardData.agents
+        .filter(a => a.status === 'amber' || a.status === 'red')
+        .slice(0, 10);  // Top 10
+    
+    const labels = elevatedAgents.map(a => a.name.split(' ')[0]);
+    const colors = elevatedAgents.map(a => 
+        a.status === 'red' ? 'rgba(239, 83, 80, 0.6)' : 'rgba(255, 167, 38, 0.6)'
+    );
+    const borderColors = elevatedAgents.map(a => 
+        a.status === 'red' ? '#ef5350' : '#ffa726'
+    );
+    
+    // Demo drift percentages (in real version, would come from trend_analysis)
+    const driftData = elevatedAgents.map((a, i) => {
+        const baseDrift = {
+            'Persian': 37.5, 'Threat': 9, 'FTO': 15, 'Domestic': 22,
+            'Cyber': 18, 'Supply': 25, 'AI': 85
+        };
+        return baseDrift[a.name.split(' ')[0]] || 10;
+    });
+    
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Persian', 'Threat', 'FTO', 'Domestic', 'Cyber', 'Supply', 'AI'],
+            labels: labels,
             datasets: [{
                 label: 'Baseline Drift %',
-                data: [37.5, 9, 15, 22, 18, 25, 85],
-                backgroundColor: [
-                    'rgba(255, 167, 38, 0.6)',
-                    'rgba(255, 167, 38, 0.6)',
-                    'rgba(255, 167, 38, 0.6)',
-                    'rgba(255, 167, 38, 0.6)',
-                    'rgba(255, 167, 38, 0.6)',
-                    'rgba(255, 167, 38, 0.6)',
-                    'rgba(239, 83, 80, 0.6)'
-                ],
-                borderColor: [
-                    '#ffa726', '#ffa726', '#ffa726', '#ffa726', '#ffa726', '#ffa726', '#ef5350'
-                ],
+                data: driftData,
+                backgroundColor: colors,
+                borderColor: borderColors,
                 borderWidth: 1
             }]
         },
@@ -228,13 +259,25 @@ function initConvergenceChart() {
 // Threat velocity radar chart
 function initVelocityChart() {
     const ctx = document.getElementById('velocityChart').getContext('2d');
+    
+    const elevatedAgents = dashboardData.agents
+        .filter(a => a.status === 'amber' || a.status === 'red')
+        .slice(0, 7);
+    
+    const labels = elevatedAgents.map(a => a.name.split(' ')[0]);
+    const velocityData = elevatedAgents.map(a => {
+        if (a.trend === 'up') return 0.7 + Math.random() * 0.3;
+        if (a.trend === 'down') return 0.2 + Math.random() * 0.3;
+        return 0.4 + Math.random() * 0.2;
+    });
+    
     new Chart(ctx, {
         type: 'radar',
         data: {
-            labels: ['Persian', 'Macro', 'FTO', 'Domestic', 'Cyber', 'Supply', 'AI'],
+            labels: labels,
             datasets: [{
                 label: 'Velocity Score',
-                data: [0.8, 0.3, 0.6, 0.7, 0.5, 0.7, 1.0],
+                data: velocityData,
                 backgroundColor: 'rgba(255, 167, 38, 0.2)',
                 borderColor: '#ffa726',
                 borderWidth: 2,
@@ -275,7 +318,7 @@ function initVelocityChart() {
 }
 
 // Initialize on load
-window.addEventListener('DOMContentLoaded', initDashboard);
+window.addEventListener('DOMContentLoaded', loadAndInit);
 
 // Auto-refresh every 5 minutes
 setInterval(() => {
