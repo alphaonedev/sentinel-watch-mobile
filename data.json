@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-15T11:27:28.656213",
+  "timestamp": "2026-02-15T11:33:47.454172",
   "threat_level": "TIER 1",
   "threat_description": "CRITICAL \u2014 Imminent threat detected",
   "active_agents": 15,
@@ -97,5 +97,41 @@
       "trend": "stable"
     }
   ],
-  "key_developments": []
+  "key_developments": [
+    {
+      "domain": "AI Watch",
+      "text": "Anthropic Head of Safeguards (Mrinank Sharma) resigned with \"world is in peril\" warning",
+      "priority": "critical"
+    },
+    {
+      "domain": "Persian Watch",
+      "text": "USS Gerald Ford deploying to join USS Abraham Lincoln CSG \u2014 largest CENTCOM naval presence since June 2025",
+      "priority": "high"
+    },
+    {
+      "domain": "FTO Watch",
+      "text": "TdA judicial interference undermining gang enforcement \u2014 threat escalating to MEDIUM-HIGH",
+      "priority": "high"
+    },
+    {
+      "domain": "Domestic Watch",
+      "text": "DHS shutdown continues (10+ days) \u2014 3rd government shutdown in 5 months",
+      "priority": "high"
+    },
+    {
+      "domain": "Cyber Watch",
+      "text": "CVE-2026-1731 (BeyondTrust) under active exploitation \u2014 federal deadline March 5",
+      "priority": "high"
+    },
+    {
+      "domain": "Supply Chain",
+      "text": "Strait of Hormuz elevated threat \u2014 Iranian drone shot down near carrier group",
+      "priority": "high"
+    },
+    {
+      "domain": "Russia-NATO",
+      "text": "Geneva peace talks scheduled next week \u2014 critical diplomatic window for Ukraine",
+      "priority": "medium"
+    }
+  ]
 }

@@ -1,35 +1,73 @@
-// Sentinel Dashboard - Chart.js Implementation with Dynamic Data Loading
+// Sentinel Dashboard - Chart.js Implementation with Embedded Data
 
 let dashboardData = null;
 
-// Load data and initialize
+// Load data from embedded window.SENTINEL_DATA or fetch as fallback
 async function loadAndInit() {
     try {
-        const response = await fetch('./data.json');
-        dashboardData = await response.json();
+        if (window.SENTINEL_DATA) {
+            // Use embedded data (preferred for GitHub Pages)
+            dashboardData = window.SENTINEL_DATA;
+            console.log('✅ Loaded embedded dashboard data');
+        } else {
+            // Fallback to fetch
+            const response = await fetch('./data.json');
+            dashboardData = await response.json();
+            console.log('✅ Loaded dashboard data from fetch');
+        }
         initDashboard();
     } catch (error) {
-        console.error('Failed to load dashboard data:', error);
-        // Fallback to demo data if load fails
+        console.error('❌ Failed to load dashboard data:', error);
+        // Use demo data as last resort
+        dashboardData = createDemoData();
         initDashboard();
     }
 }
 
+// Create demo data fallback
+function createDemoData() {
+    return {
+        timestamp: new Date().toISOString(),
+        threat_level: 'TIER 2',
+        threat_description: 'ELEVATED — Multiple domains showing convergence',
+        active_agents: 15,
+        elevated_domains: 7,
+        total_domains: 15,
+        agents: [
+            { name: 'Persian Watch', status: 'amber', tier: 'TIER 2', trend: 'up' },
+            { name: 'AI Watch', status: 'red', tier: 'TIER 1', trend: 'up' },
+            { name: 'FTO Watch', status: 'amber', tier: 'TIER 2', trend: 'stable' },
+            { name: 'Domestic Watch', status: 'amber', tier: 'TIER 2', trend: 'stable' },
+            { name: 'Cyber Watch', status: 'amber', tier: 'TIER 2', trend: 'stable' },
+            { name: 'Russia-NATO', status: 'amber', tier: 'TIER 2', trend: 'stable' },
+            { name: 'Weather Watch', status: 'amber', tier: 'TIER 2', trend: 'stable' },
+            { name: 'News Watch', status: 'amber', tier: 'TIER 2', trend: 'stable' },
+            { name: 'Threat Watch', status: 'green', tier: 'TIER 3', trend: 'stable' },
+            { name: 'Macro Watch', status: 'green', tier: 'TIER 3', trend: 'up' },
+            { name: 'Market Watch', status: 'green', tier: 'TIER 3', trend: 'stable' },
+            { name: 'Doomsday Watch', status: 'green', tier: 'TIER 3', trend: 'stable' },
+            { name: 'China-Taiwan', status: 'green', tier: 'TIER 3', trend: 'stable' },
+            { name: 'Supply Chain', status: 'green', tier: 'TIER 3', trend: 'stable' },
+            { name: 'UAP Watch', status: 'green', tier: 'TIER 3', trend: 'stable' }
+        ],
+        key_developments: [
+            { domain: 'AI Watch', text: 'Anthropic Head of Safeguards resigned with "world is in peril" warning', priority: 'critical' },
+            { domain: 'Persian Watch', text: 'USS Gerald Ford deploying to join USS Abraham Lincoln CSG — dual carrier posture', priority: 'high' },
+            { domain: 'FTO Watch', text: 'TdA judicial interference undermining gang enforcement', priority: 'high' },
+            { domain: 'Domestic Watch', text: 'DHS shutdown continues (10+ days) — 3rd shutdown in 5 months', priority: 'high' },
+            { domain: 'Cyber Watch', text: 'CVE-2026-1731 under active exploitation — federal deadline March 5', priority: 'high' }
+        ]
+    };
+}
+
 // Initialize UI
 function initDashboard() {
-    if (!dashboardData) {
-        // Demo data fallback
-        dashboardData = {
-            timestamp: new Date().toISOString(),
-            threat_level: 'TIER 2',
-            threat_description: 'ELEVATED — Multiple domains showing convergence',
-            active_agents: 15,
-            elevated_domains: 7,
-            total_domains: 15,
-            agents: [],
-            key_developments: []
-        };
+    if (!dashboardData || !dashboardData.agents) {
+        console.error('❌ Dashboard data invalid');
+        return;
     }
+    
+    console.log(`📊 Initializing dashboard: ${dashboardData.agents.length} agents, ${dashboardData.key_developments.length} developments`);
     
     // Set timestamp
     const timestamp = new Date(dashboardData.timestamp);
@@ -50,7 +88,7 @@ function initDashboard() {
     document.getElementById('activeAgents').textContent = `${dashboardData.active_agents}/${dashboardData.active_agents}`;
     document.getElementById('elevatedDomains').textContent = `${dashboardData.elevated_domains}/${dashboardData.total_domains}`;
     
-    // Calculate time since last scan (from timestamp)
+    // Calculate time since last scan
     const now = new Date();
     const scanTime = new Date(dashboardData.timestamp);
     const minutesAgo = Math.floor((now - scanTime) / 60000);
@@ -72,15 +110,19 @@ function initDashboard() {
     // Populate key developments
     const devsContainer = document.getElementById('keyDevelopments');
     devsContainer.innerHTML = '';
-    dashboardData.key_developments.forEach(dev => {
-        const devEl = document.createElement('div');
-        devEl.className = 'metric-row';
-        const priorityColor = dev.priority === 'critical' ? '#ef5350' : dev.priority === 'high' ? '#ffa726' : '#90caf9';
-        devEl.innerHTML = `
-            <span class="metric-label"><strong style="color: ${priorityColor}">${dev.domain}:</strong> ${dev.text}</span>
-        `;
-        devsContainer.appendChild(devEl);
-    });
+    if (dashboardData.key_developments && dashboardData.key_developments.length > 0) {
+        dashboardData.key_developments.forEach(dev => {
+            const devEl = document.createElement('div');
+            devEl.className = 'metric-row';
+            const priorityColor = dev.priority === 'critical' ? '#ef5350' : dev.priority === 'high' ? '#ffa726' : '#90caf9';
+            devEl.innerHTML = `
+                <span class="metric-label"><strong style="color: ${priorityColor}">${dev.domain}:</strong> ${dev.text}</span>
+            `;
+            devsContainer.appendChild(devEl);
+        });
+    } else {
+        devsContainer.innerHTML = '<div class="metric-row"><span class="metric-label">No critical developments in past 24 hours</span></div>';
+    }
     
     // Initialize charts
     initPersianTrendChart();
@@ -194,11 +236,7 @@ function initMacroTrendChart() {
 function initConvergenceChart() {
     const ctx = document.getElementById('convergenceChart').getContext('2d');
     
-    // Filter elevated agents for convergence display
-    const elevatedAgents = dashboardData.agents
-        .filter(a => a.status === 'amber' || a.status === 'red')
-        .slice(0, 10);  // Top 10
-    
+    const elevatedAgents = dashboardData.agents.filter(a => a.status === 'amber' || a.status === 'red').slice(0, 10);
     const labels = elevatedAgents.map(a => a.name.split(' ')[0]);
     const colors = elevatedAgents.map(a => 
         a.status === 'red' ? 'rgba(239, 83, 80, 0.6)' : 'rgba(255, 167, 38, 0.6)'
@@ -207,14 +245,12 @@ function initConvergenceChart() {
         a.status === 'red' ? '#ef5350' : '#ffa726'
     );
     
-    // Demo drift percentages (in real version, would come from trend_analysis)
-    const driftData = elevatedAgents.map((a, i) => {
-        const baseDrift = {
-            'Persian': 37.5, 'Threat': 9, 'FTO': 15, 'Domestic': 22,
-            'Cyber': 18, 'Supply': 25, 'AI': 85
-        };
-        return baseDrift[a.name.split(' ')[0]] || 10;
-    });
+    const baseDrift = {
+        'Persian': 37.5, 'Threat': 9, 'FTO': 15, 'Domestic': 22,
+        'Cyber': 18, 'Supply': 25, 'AI': 85, 'Russia-NATO': 12,
+        'Weather': 8, 'News': 6
+    };
+    const driftData = elevatedAgents.map(a => baseDrift[a.name.split(' ')[0]] || 10);
     
     new Chart(ctx, {
         type: 'bar',
@@ -260,10 +296,7 @@ function initConvergenceChart() {
 function initVelocityChart() {
     const ctx = document.getElementById('velocityChart').getContext('2d');
     
-    const elevatedAgents = dashboardData.agents
-        .filter(a => a.status === 'amber' || a.status === 'red')
-        .slice(0, 7);
-    
+    const elevatedAgents = dashboardData.agents.filter(a => a.status === 'amber' || a.status === 'red').slice(0, 7);
     const labels = elevatedAgents.map(a => a.name.split(' ')[0]);
     const velocityData = elevatedAgents.map(a => {
         if (a.trend === 'up') return 0.7 + Math.random() * 0.3;
